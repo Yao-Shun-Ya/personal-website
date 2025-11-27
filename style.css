@@ -1,0 +1,417 @@
+/* =========================================
+   0. 字体引入 (Font Face)
+   ========================================= */
+@font-face {
+    font-family: 'Foxi'; /* 我们给它起个英文名叫 Foxi，方便调用 */
+    /* 请确保你的 Font 文件夹和 style.css 在同一级目录，且文件名完全一致 */
+    src: url('./Font/演示佛系体.ttf') format('truetype');
+    font-display: swap; /* 优化加载体验 */
+}
+
+/* =========================================
+   1. 全局变量定义 (Day & Night)
+   ========================================= */
+:root {
+    /* --- 白天模式 (原配色) --- */
+    --bg-color: #FDFBF7;        /* 浅米白背景 */
+    --text-color: #555555;      /* 深灰字体 */
+    --accent-green: #B4E4DA;    /* 淡青色 */
+    --accent-pink: #FADADD;     /* 淡粉色 */
+    --accent-yellow: #FFFACD;   /* 淡黄色 */
+    --card-bg: #FFFFFF;         /* 卡片白色背景 */
+    --track-bg: #f4f4f4;        /* 相册轨道背景 */
+    --header-bg: rgba(255, 255, 255, 0.85); /* 导航栏背景 */
+    --shadow-color: rgba(0, 0, 0, 0.1);     /* 阴影颜色 */
+}
+
+/* --- 黑夜模式 (温馨霓虹) --- */
+[data-theme="dark"] {
+    --bg-color: #1a1b26;        /* 深夜蓝灰背景 */
+    --text-color: #e0e0e0;      /* 柔和亮白字体 */
+    
+    /* 霓虹变种：高饱和度荧光色 */
+    --accent-green: #00e0c6;    /* 荧光青 */
+    --accent-pink: #ff79c6;     /* 荧光粉 */
+    --accent-yellow: #f1fa8c;   /* 荧光黄 */
+    
+    --card-bg: #24283b;         /* 卡片深蓝背景 */
+    --track-bg: #24283b;        /* 相册轨道深色 */
+    --header-bg: rgba(26, 27, 38, 0.85); /* 导航栏深色 */
+    --shadow-color: rgba(0, 0, 0, 0.5);  /* 深色阴影 */
+}
+
+/* 全局颜色过渡：让黑白切换丝滑流畅 */
+body, header, .card, .about-container, .btn, .theme-btn, .focus-overlay {
+    transition: background-color 0.5s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 全局重置 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* =========================================
+   2. 基础页面样式
+   ========================================= */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    
+    /* 背景图案：点阵纸效果 */
+    background-image: radial-gradient(var(--shadow-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+    
+    padding-top: 120px; /* 避开固定导航栏 */
+}
+
+h1, h2, h3 { font-family: 'ZCOOL KuaiLe', 'Patrick Hand', cursive; font-weight: normal; }
+a { text-decoration: none; color: inherit; }
+
+/* =========================================
+   3. 导航栏 (Header) & 切换按钮
+   ========================================= */
+header {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    z-index: 1000;
+
+    /* 毛玻璃背景 */
+    background-color: var(--header-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    border-radius: 20px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.logo { font-size: 1.8rem; /* 字体特殊，可以稍微调大一点点 */
+    color: var(--text-color);
+    font-family: 'Foxi', cursive; /* ✅ 应用佛系体 */ }
+nav ul { display: flex; gap: 20px; list-style: none; }
+
+nav a {
+    padding: 8px 15px;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    transition: all 0.3s ease;
+    font-family: 'Foxi', cursive; /* ✅ 应用佛系体 */
+    font-size: 1.5rem; /* 手写体通常比标准体显得小，稍微加大一点易读性更好 */
+}
+
+nav a:hover {
+    background-color: var(--accent-green);
+    color: white; /* 这里的文字颜色Hover保持白色 */
+    transform: rotate(-2deg);
+}
+
+/* =========================================
+   ⭐ 新增特效：灵动的黑夜模式切换按钮
+   ========================================= */
+
+/* 1. 定义果冻弹跳动画 (Jelly Bounce Keyframes) */
+@keyframes jelly-bounce {
+    0%   { transform: scale(1, 1); }
+    30%  { transform: scale(1.25, 0.75); } /* 压扁变宽 */
+    40%  { transform: scale(0.75, 1.25); } /* 拉长变窄 */
+    50%  { transform: scale(1.15, 0.85); } /* 稍微压扁 */
+    65%  { transform: scale(0.95, 1.05); } /* 稍微拉长 */
+    75%  { transform: scale(1.05, 0.95); } /* 微调 */
+    100% { transform: scale(1, 1); }       /* 恢复 */
+}
+
+/* 2. 按钮容器基础样式 */
+.theme-btn {
+    position: relative; /* 为了让内部图标绝对定位 */
+    background: var(--card-bg);
+    border: 2px solid var(--accent-green);
+    color: var(--text-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    box-shadow: 0 0 5px var(--accent-green);
+    overflow: hidden; /* 防止图标飞出边界 */
+    /* 基础的 hover 过渡 */
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+/* 鼠标悬停时的轻微放大 (不旋转了，留给点击动画) */
+.theme-btn:hover {
+    box-shadow: 0 0 15px var(--accent-green);
+}
+
+/* ⭐ 点击时的果冻动画类 (由 JS 添加) */
+.theme-btn.animate-bounce {
+    animation: jelly-bounce 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* 3. 图标通用样式 (让它们重叠在一起) */
+.theme-btn .icon-wrapper {
+    position: absolute; /* 绝对定位，脱离文档流 */
+    top: 50%;
+    left: 50%;
+    /* 居中，并设置过渡动画，使用贝塞尔曲线让运动更Q弹 */
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- 白天模式默认状态 (显示太阳，隐藏月亮) --- */
+
+/* 太阳：正常显示 */
+.theme-btn .sun {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+/* 月亮：隐藏，旋转一定角度并缩小，准备登场 */
+.theme-btn .moon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
+}
+
+/* --- 黑夜模式状态 (显示月亮，隐藏太阳) --- */
+
+/* 太阳：隐藏，旋转并缩小离开 */
+[data-theme="dark"] .theme-btn .sun {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
+}
+
+/* 月亮：正常显示，旋转归位并放大 */
+[data-theme="dark"] .theme-btn .moon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+/* =========================================
+   4. 英雄区域 (Hero Section)
+   ========================================= */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Q弹头像 */
+.avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px dashed var(--accent-pink);
+    margin-bottom: 20px;
+    padding: 5px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.avatar:hover {
+    transform: scale(1.1) rotate(15deg);
+    border-color: var(--accent-green);
+    border-style: solid;
+    box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+.hero h1 { font-size: 3rem; margin-bottom: 10px; color: var(--text-color); }
+.hero p { font-size: 1.2rem; opacity: 0.8; margin-bottom: 30px; }
+
+/* =========================================
+   5. 按钮样式
+   ========================================= */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--accent-green);
+    color: var(--bg-color); /* 按钮文字跟随背景色反转，或者保持 white */
+    color: #fff; /* 强制白色看起来更清晰 */
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 1.2rem;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    box-shadow: 4px 4px 0px var(--accent-yellow);
+    transition: transform 0.2s;
+}
+
+.btn:hover {
+    transform: translate(-2px, -2px) scale(1.05);
+    box-shadow: 6px 6px 0px var(--accent-yellow); 
+}
+
+/* 黑夜模式按钮发光 */
+[data-theme="dark"] .btn { box-shadow: 0 0 10px var(--accent-yellow); }
+
+.btn-bilibili {
+    background-color: #FB7299;
+    margin-left: 15px;
+    box-shadow: 4px 4px 0px #ffcbd7;
+}
+[data-theme="dark"] .btn-bilibili { box-shadow: 0 0 10px #FB7299; }
+
+/* --- 网易云音乐按钮样式 --- */
+.btn-netease {
+    background-color: #E60026; /* 网易红 */
+    margin-left: 15px; /* 与左边按钮的间距 */
+    box-shadow: 4px 4px 0px #ffcccc; /* 浅红色立体阴影 */
+}
+
+/* 鼠标悬停 */
+.btn-netease:hover {
+    box-shadow: 6px 6px 0px #ffcccc;
+}
+
+/* 黑夜模式：发红光 */
+[data-theme="dark"] .btn-netease {
+    box-shadow: 0 0 10px #E60026; /* 红色霓虹光晕 */
+}
+
+/* =========================================
+   6. 通用区域布局
+   ========================================= */
+.section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+#home, #portfolio, #about, #gallery { scroll-margin-top: 140px; }
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-title::after {
+    content: ''; 
+    display: block;
+    width: 100%;
+    height: 8px;
+    background-color: var(--accent-yellow);
+    position: absolute;
+    bottom: 5px;
+    z-index: -1;
+    border-radius: 10px;
+    opacity: 0.6;
+}
+
+/* =========================================
+   7. 视频卡片 (Portfolio)
+   ========================================= */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px; 
+}
+
+.card {
+    background: var(--card-bg); /* 使用变量背景 */
+    padding: 15px;
+    border: 2px solid rgba(255,255,255,0.05);
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px var(--shadow-color);
+    
+    /* 进场动画初始状态 */
+    transform: rotate(1deg) translateY(20px);
+    opacity: 0;
+    
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, opacity 0.4s ease;
+}
+
+.card:nth-child(even) { transform: rotate(-1deg) translateY(20px); }
+
+/* 进场完毕 */
+.card.visible { transform: rotate(0deg) translateY(0); opacity: 1; }
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    background-color: #eee;
+    border-radius: 3px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.card h3 { font-size: 1.4rem; margin-bottom: 5px; }
+.card-meta { font-size: 0.9rem; opacity: 0.7; display: flex; justify-content: space-between; align-items: center; }
+.tag {
+    background-color: var(--accent-yellow);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    color: #444; /* tag文字保持深色 */
+}
+
+/* =========================================
+   8. 关于我 (About)
+   ========================================= */
+.about-container {
+    background-color: var(--card-bg); /* ✅ 使用变量，黑夜模式会变黑 */
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid var(--bg-color);
+    box-shadow: 8px 8px 0px var(--accent-green);
+}
+
+/* 黑夜模式关于框发光 */
+[data-theme="dark"] .about-container { box-shadow: 0 0 15px var(--accent-pink); }
+
+.about-text { font-size: 1.1rem; margin-bottom: 20px; }
+
+/* =========================================
+   9. 页脚 (Footer)
+   ========================================= */
+footer { text-align: center; padding: 50px 20px; opacity: 0.6; font-size: 0.9rem; }
+.heart { color: var(--accent-pink); }
+
+/* =========================================
+   10. 影院聚焦模式 & 霓虹光效
+   ========================================= */
+/* 背景遮罩层 */
+.focus-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 990;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+body.has-focused-card .focus-overlay { opacity: 1; pointer-events: auto; }
+
+/* 卡片聚焦状态 */
+.card.is-focused {
+    position: relative;
+    z-index: 1001;
+    background-color: var(--card-bg);
+    border-color: var(--accent-green);
+    /* 强阴影 */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    /* Transform 由 JS 内联控制 */
+}
+
+/* 黑夜模式下的聚焦霓虹光效 */
+[data-theme="dark"] .card.is-focused {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 30px var(--accent-green) !important; /* 青色发光 */
+}

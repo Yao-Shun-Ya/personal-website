@@ -1,0 +1,143 @@
+/* =========================================
+   移动端独立适配样式 (Mobile Responsive)
+   文件名: mobile.css
+   触发条件: 屏幕宽度小于 768px (手机/竖屏平板)
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+    
+    /* --- 1. 全局与基础布局调整 --- */
+    body {
+        padding-top: 100px;
+        background-size: 10px 10px;
+    }
+
+    /* --- 2. 导航栏 (Header) --- */
+    header {
+        top: 0;
+        width: 100%;
+        border-radius: 0 0 20px 20px;
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+        padding-left: 5px;
+        align-self: flex-start;
+    }
+
+    nav ul {
+        gap: 5px;
+        width: 100%;
+        justify-content: space-between; 
+        padding: 0 5px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+        padding: 5px 8px;
+    }
+
+    .theme-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        margin-left: 0;
+        width: 32px;
+        height: 32px;
+    }
+
+    /* --- 3. Hero 区域 --- */
+    .hero {
+        padding: 30px 15px;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn {
+        width: 90%; 
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .btn-bilibili, 
+    .btn-netease {
+        margin-left: 0;
+    }
+
+    /* --- 4. 内容区域 --- */
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+    }
+
+    .about-container {
+        padding: 20px 15px;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        padding: 0 5px;
+        gap: 25px;
+    }
+    
+    .card-img {
+        height: 180px;
+    }
+
+    /* --- 5. ⭐ 无限相册深度适配 (比例修复版) --- */
+    
+    #banner-container {
+        /* ✅ 改动1：高度也用 vw，与宽度锁定比例 */
+        /* 60vw 大约是屏幕高度的 1/3，比例协调 */
+        height: 60vw; 
+        margin-top: 10px;
+    }
+
+    .img-box {
+        /* ✅ 改动2：宽度稍微加宽，形成 3:4 的照片比例 */
+        /* 42vw (宽) / 60vw (高) ≈ 0.7 (接近 3:4 比例) */
+        width: 42vw; 
+        margin-right: 10px;
+    }
+    
+    /* 确保图片充满盒子且不变形 */
+    .img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 关键：裁剪多余部分，保证填满 */
+    }
+    
+    .img-box .info {
+        font-size: 1.2rem; /* 文字稍微改小，适配窄卡片 */
+    }
+    
+    .gallery-btn-group {
+        bottom: -40px;
+        gap: 30px;
+    }
+    
+    .btn-round {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 2px 2px 0px var(--accent-pink);
+    }
+}

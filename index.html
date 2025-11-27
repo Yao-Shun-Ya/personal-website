@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的奇奇怪怪个人页 | 爻舜</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">   <link rel="stylesheet" href="gallery.css"> <link rel="stylesheet" href="mobile.css">
+</head>
+
+<body>
+    <div class="focus-overlay"></div>
+
+    <header>
+        <div class="logo">🎶 爻舜</div>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#portfolio">最新投稿</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#gallery">属性</a></li>
+            </ul>
+        </nav>
+        
+        <button id="theme-toggle" class="theme-btn" aria-label="切换黑夜模式">
+            <span class="icon-wrapper sun">☀️</span>
+            <span class="icon-wrapper moon">🌙</span>
+        </button>
+    </header>
+
+    <section id="home" class="hero">
+        <img src="./Picture/头像.jpg" alt="我的头像" class="avatar">
+        <h1>你好呜，我是 爻舜 哇！</h1>
+        <p>✨ 一只怪唱见哇 | 可能是温暖系 | 好像是治愈风</p>
+        <div class="actions">
+            <a href="#portfolio" class="btn">看看作品嘛~</a>
+            <a href="https://space.bilibili.com/168115760" target="_blank" class="btn btn-bilibili">Bilibili 主页</a>
+            <a href="https://y.music.163.com/m/artist?id=98638633&userid=586710065" target="_blank" class="btn btn-netease">网易云主页</a>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section">
+        <h2 class="section-title">比较新的几个投稿</h2>
+        <div class="portfolio-grid">
+            <p style="text-align:center; width:100%; color:#999;">正在加载精彩视频...</p>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">关于我的一大↗↘堆信息</h2>
+        <div class="about-container">
+            <p class="about-text">
+                呜哇！我是一只06年的INFP双鱼四川男娃呀，目前川北医大二在读。爱好很多：听歌、唱歌、玩游戏、看番、看剧等。头像是ikutsuki老师画的兽太Sisi！！！我超级超级喜欢的~呜呜。
+            </p>
+            <p class="about-text">
+                特别喜欢的歌手有Chilichill和Aimer，但是各种风格的歌曲都会听的，比较喜欢的曲风有J-pop、R&B和City-pop。
+            </p>
+            <p class="about-text">
+                <hr><br>
+                🎙️ <b>硬件：<br></b>
+                电脑：MagicBook 16 Pro 2024，<s>Apple Macbook Pro 2015</s>（现在不用啦）<br>
+                麦克风：<u>Sennheiser MK4（主要录音麦克风）</u>，Audio-Technica AT2040<br>
+                声卡：Focusrite Clarett+ 2Pre，<s>Focusrite Scarlett Solo 3rd</s>（现在不用啦）<br>
+                监听设备：AKG K52 & Sony WH-1000XM5<s>（主打的就是业余说是）</s>，Yamaha HS4<br><br>
+                💻 <b>DAW：<br></b>
+                宿主：Cubase 13 pro，Studio one 7 Pro，<S>Logic Pro X</S>（换Windows之后就没用过啦）<br>
+                用的奇奇怪怪的插件：Waves、Fabfilter、Ozone 11、Soren、T-RackS、iZotope RX 11、Kontakt、Plugin Alliance、
+                Sonible、TBTECH、Valhalla、IK、Antares.......<br><br>
+                🎨 <b>技能：<br></b>
+                翻唱 / 简单混修音 / 给大家提供情绪价值嘿嘿<br><br>
+            </p>
+            <hr><br>
+            <p class="about-text">
+                翻唱多半是临时起意，录歌环境有限<s>（偶尔去后山录音）</s>（搬了新校区之后找不到地方录歌了呜呜，让我再找找有没有好地方awa），出作品比较慢，我尽量克服懒癌呀。
+            </p>
+            <p class="about-text" style="text-align: right; color: var(--accent-pink); margin-top: 20px;">
+                —— 期待与你在任何地方相遇哇！
+            </p>
+        </div>
+    </section>
+
+    <section id="gallery" class="infinite-gallery-section">
+        <h2 class="section-title">我的奇怪属性切片嘿嘿<br>（可以点哦）</h2>
+        
+        <div id="banner-container">
+            <div id="banner-mask">
+                <div class="img-wrapper" id="dynamic-gallery"></div>
+            </div>
+
+            <div class="gallery-btn-group">
+                <button class="btn-round prev" aria-label="上一张">
+                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>
+                </button>
+                <button class="btn-round next" aria-label="下一张">
+                    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Designed with <span class="heart">♥</span> for 爻舜</p>
+        <p>联系邮箱: 2720356281@qq.com</p>
+    </footer>
+
+    <script src="script.js"></script>  <script src="gallery.js"></script> </body>
+</html>
