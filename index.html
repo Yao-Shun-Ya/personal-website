@@ -6,12 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的奇奇怪怪个人页 | 爻舜</title>
     
+    <link rel="icon" href="/Picture/头像.jpg" type="image/jpeg">
+    
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">   <link rel="stylesheet" href="gallery.css"> <link rel="stylesheet" href="mobile.css">
-</head>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+    
+    <style>
+        .preload * {
+            transition: none !important;
+            -webkit-transition: none !important;
+        }
+    </style>
 
-<body>
+    <link rel="stylesheet" href="style.css">       <link rel="stylesheet" href="gallery.css">     <link rel="stylesheet" href="mobile.css">      <link rel="stylesheet" href="easter-egg.css">  </head>
+
+<body class="preload">
+
     <div class="focus-overlay"></div>
 
     <header>
@@ -39,6 +57,7 @@
             <a href="#portfolio" class="btn">看看作品嘛~</a>
             <a href="https://space.bilibili.com/168115760" target="_blank" class="btn btn-bilibili">Bilibili 主页</a>
             <a href="https://y.music.163.com/m/artist?id=98638633&userid=586710065" target="_blank" class="btn btn-netease">网易云主页</a>
+            <a href="/download" class="btn btn-download">我的资源小仓库</a>
         </div>
     </section>
 
@@ -108,6 +127,19 @@
         <p>github：<a href="https://github.com/Yao-Shun-Ya/personal-website" target="_blank">https://github.com/Yao-Shun-Ya/personal-website（可点击跳转）</a></p>
     </footer>
 
-    <script src="script.js"></script>  <script src="gallery.js"></script> </body>
+    <div id="easter-egg-modal" class="easter-modal-backdrop">
+        <div class="easter-card">
+            <button class="easter-close-btn">&times;</button>
+            <div class="easter-content">
+                <div class="easter-icon">🎉</div>
+                <h2>哇！被你发现了！</h2>
+                <p class="highlight-text">感谢生命中的每一个人</p>
+                <p class="sub-text">✨ 感谢你可能听过我的作品 ✨</p>
+            </div>
+        </div>
+    </div>
 
+    <script src="script.js"></script>
+    <script src="gallery.js"></script> 
+    <script src="easter-egg.js"></script> </body>
 </html>

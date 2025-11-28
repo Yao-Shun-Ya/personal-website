@@ -1,0 +1,517 @@
+/* =========================================
+   Download 页面独立样式 (Style.css - 终极修复版)
+   ========================================= */
+
+/* 1. 定义旋转动画 (用于 RGB 边框) */
+@keyframes spin-border {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 2. 全局变量 (RGB 流光配色方案) */
+:root {
+    /* ☀️ 白天：莫兰迪极光 */
+    --border-bg: conic-gradient(
+        #ff9a9e, #a18cd1, #fad0c4, #8fd3f4, #fbc2eb, #ff9a9e
+    );
+}
+
+[data-theme="dark"] {
+    /* 🌙 黑夜：赛博朋克霓虹 */
+    --border-bg: conic-gradient(
+        #ff0055, #ff00cc, #0099ff, #00ffcc, #ccff00, #ff0055
+    );
+}
+
+/* 3. 布局调整 */
+html {
+    scrollbar-gutter: stable; /* 强制预留滚动槽 */
+}
+
+body { 
+    padding-top: 100px; 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: radial-gradient(var(--shadow-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+    overflow-y: auto; 
+}
+
+body.lock-scroll {
+    overflow: hidden !important;
+}
+
+.download-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    padding: 0 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+/* 导航栏层级修正 */
+header {
+    z-index: 3000 !important; 
+    position: fixed; 
+}
+
+/* =========================================
+   筛选工具栏
+   ========================================= */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--accent-green);
+    color: var(--text-color);
+    padding: 6px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    font-family: inherit;
+    margin-right: 5px;
+}
+
+.filter-btn:hover { background: rgba(180, 228, 218, 0.2); }
+
+.filter-btn.active {
+    background: var(--accent-green);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(180, 228, 218, 0.4);
+}
+
+/* ----------------------------------------------------
+   ✅ 重点修复区域：滑动排序开关 (强制颜色对比度)
+   ---------------------------------------------------- */
+.sort-switch {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--accent-green);
+    border-radius: 20px;
+    padding: 4px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    height: 40px;
+    width: 200px;
+}
+
+/* 选项文字 (默认状态) */
+.sort-switch .switch-opt {
+    flex: 1;
+    text-align: center;
+    font-size: 0.9rem;
+    z-index: 5; /* 必须高于滑块 */
+    transition: color 0.2s ease;
+    font-weight: bold;
+    
+    /* ☀️ 白天未选中：深灰色 (不透明) */
+    color: #666666 !important; 
+    opacity: 1 !important;
+}
+
+/* 激活状态 (选中) */
+.sort-switch .switch-opt.active {
+    /* ☀️ 白天选中：纯白色 (背景是绿色) */
+    color: #ffffff !important; 
+}
+
+/* 滑动色块 */
+.switch-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background-color: var(--accent-green);
+    border-radius: 16px;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.sort-switch[data-val="oldest"] .switch-slider {
+    transform: translateX(calc(100% + 2px)); 
+}
+
+/* --- 🌙 黑夜模式颜色强制适配 --- */
+
+/* 黑夜未选中 */
+[data-theme="dark"] .sort-switch .switch-opt {
+    /* 亮灰色，背景是深蓝卡片色 */
+    color: #cccccc !important; 
+}
+
+/* 黑夜选中 */
+[data-theme="dark"] .sort-switch .switch-opt.active {
+    /* 纯黑色，背景是高亮荧光绿，对比度最高 */
+    color: #000000 !important; 
+}
+/* ---------------------------------------------------- */
+
+
+/* =========================================
+   资源网格 (Grid & Cards)
+   ========================================= */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.resource-card.is-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.resource-card {
+    background: var(--card-bg);
+    border: 2px solid var(--bg-color);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+    cursor: pointer; 
+}
+
+.resource-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    border-color: var(--accent-green);
+}
+
+.resource-card:active {
+    transform: translateY(-4px) scale(0.98);
+    transition: 0.1s;
+}
+
+[data-theme="dark"] .resource-card:hover {
+    box-shadow: 0 0 20px rgba(0, 224, 198, 0.15);
+}
+
+.card-preview {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #f0f0f0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.resource-card:hover .card-preview img { transform: scale(1.05); }
+
+.card-body {
+    padding: 20px;
+    flex: 1;
+    text-align: left;
+}
+
+.card-body h3 {
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-tag {
+    font-size: 0.8rem;
+    color: var(--accent-green);
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.card-body .note {
+    font-size: 0.95rem;
+    color: #888;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-footer {
+    padding: 15px 20px;
+    background: rgba(0,0,0,0.02);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.file-info { font-size: 0.85rem; color: #aaa; font-weight: bold; }
+
+.btn-mini {
+    display: inline-block;
+    padding: 6px 15px;
+    background-color: var(--accent-green);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    transition: background 0.3s;
+    text-decoration: none;
+    pointer-events: none; 
+}
+
+.btn-mini:hover { background-color: #8ed6c7; }
+[data-theme="dark"] .btn-mini { color: #1a1b26; font-weight: bold; }
+
+/* =========================================
+   ⭐ 展开后的详情卡片 (Resource Overlay - RGB流光版)
+   ========================================= */
+.resource-overlay {
+    position: fixed;
+    z-index: 2000; 
+    padding: 3px; 
+    background: transparent; 
+    border-radius: 20px;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.6);
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: 45% 55%; 
+    transform-origin: top left; 
+    transition: 
+        top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.3s ease,
+        border-radius 0.3s ease;
+    will-change: top, left, width, height;
+}
+
+/* RGB 流光层 */
+.resource-overlay::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 200%; height: 200%; 
+    background: var(--border-bg);
+    z-index: -2; 
+    animation: spin-border 4s linear infinite; 
+}
+
+/* 纯色遮罩层 */
+.resource-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 3px; 
+    background: var(--card-bg);
+    border-radius: 17px;
+    z-index: -1;
+}
+
+.resource-overlay.active { opacity: 1; pointer-events: auto; border: none; }
+
+.resource-overlay.closing {
+    opacity: 1;
+    pointer-events: none;
+    transition: 
+        top 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        left 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        height 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.1s 0.35s ease;
+}
+
+.resource-overlay.fading-out {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.overlay-preview {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    overflow: hidden;
+    position: relative;
+    border-top-left-radius: 17px;
+    border-bottom-left-radius: 17px;
+    z-index: 1;
+}
+
+.overlay-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.overlay-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; 
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    border-top-right-radius: 17px;
+    border-bottom-right-radius: 17px;
+    z-index: 1;
+}
+
+.resource-overlay.active .overlay-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s; 
+}
+
+.resource-overlay.closing .overlay-content {
+    opacity: 0;
+    transition: none; 
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.05);
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 10;
+}
+.close-btn:hover { background: #e25555; color: white; transform: rotate(90deg); }
+
+.overlay-content h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+.overlay-content .meta {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #999;
+}
+.overlay-content .desc {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    white-space: pre-wrap;
+}
+
+.btn-large {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-green);
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: auto; 
+    box-shadow: 0 5px 15px rgba(180, 228, 218, 0.4);
+    transition: transform 0.2s;
+}
+.btn-large:hover { transform: scale(1.02); background: #8ed6c7; }
+
+/* 遮罩背景 */
+.overlay-backdrop {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1004;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+.overlay-backdrop.active { opacity: 1; pointer-events: auto; }
+
+/* 动画 */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { animation: fadeIn 0.4s ease forwards; }
+
+.back-link { display: inline-block; margin: 40px 0; font-size: 1.1rem; color: var(--text-color); border-bottom: 2px dashed var(--accent-pink); transition: all 0.3s; }
+.back-link:hover { color: var(--accent-pink); border-bottom-style: solid; }
+.preload * { transition: none !important; }
+
+/* =========================================
+   移动端适配
+   ========================================= */
+@media screen and (max-width: 768px) {
+    body { padding-top: 140px; }
+    header { top: 0; width: 100%; border-radius: 0 0 20px 20px; flex-direction: column; padding: 15px; gap: 10px; }
+    .logo { align-self: flex-start; font-size: 1.4rem; }
+    nav ul { width: 100%; padding-left: 5px; justify-content: flex-start; }
+    .theme-btn { position: absolute; top: 15px; right: 15px; }
+    .download-container { padding: 0 10px; }
+    
+    .filter-bar { justify-content: center; gap: 10px; }
+    .category-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .filter-btn { font-size: 0.85rem; padding: 5px 12px; }
+    .sort-switch { width: 100%; max-width: 280px; }
+
+    .resource-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .resource-card { border-radius: 12px; }
+    .card-preview { aspect-ratio: 1/1; }
+    .card-body { padding: 10px; }
+    .card-body h3 { font-size: 1rem; }
+    .date-tag { font-size: 0.7rem; margin-bottom: 4px; }
+    .card-body .note { font-size: 0.8rem; -webkit-line-clamp: 2; line-clamp: 2; margin-bottom: 0; }
+    .card-footer { padding: 8px 10px; flex-direction: column; gap: 5px; align-items: stretch; }
+    .file-info { font-size: 0.75rem; text-align: center; }
+    .btn-mini { width: 100%; text-align: center; padding: 4px 0; font-size: 0.85rem; }
+    
+    .resource-overlay {
+        grid-template-columns: 1fr;
+        grid-template-rows: 250px 1fr;
+    }
+    .overlay-content { padding: 25px; }
+    .overlay-content h2 { font-size: 1.6rem; }
+    .close-btn { top: 15px; right: 15px; background: rgba(255,255,255,0.8); color: black; }
+
+    .overlay-preview {
+        border-radius: 17px 17px 0 0;
+    }
+    .overlay-content {
+        border-radius: 0 0 17px 17px;
+    }
+}

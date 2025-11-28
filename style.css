@@ -202,7 +202,7 @@ nav a:hover {
 }
 
 /* =========================================
-   4. 英雄区域 (Hero Section)
+   4. 英雄区域 (Hero Section) - 完美衔接版
    ========================================= */
 .hero {
     text-align: center;
@@ -211,25 +211,46 @@ nav a:hover {
     margin: 0 auto;
 }
 
-/* Q弹头像 */
 .avatar {
     width: 180px;
     height: 180px;
     border-radius: 50%;
     object-fit: cover;
+    
     border: 5px dashed var(--accent-pink);
-    margin-bottom: 20px;
     padding: 5px;
     background: white;
+    margin-bottom: 20px;
     cursor: pointer;
-    transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    
+    /* 基础过渡：让悬停的变大变歪丝滑 */
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                border-color 0.3s, 
+                box-shadow 0.3s;
+                
+    -webkit-tap-highlight-color: transparent;
 }
 
+/* 1. 悬停状态：是你喜欢的 1.1倍 + 15度歪头 */
 .avatar:hover {
-    transform: scale(1.1) rotate(15deg);
+    transform: scale(1.1) rotate(15deg); /* ✅ 保持原样 */
     border-color: var(--accent-green);
     border-style: solid;
     box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+/* 2. 按下状态：关键修复！ */
+/* 必须保持 15deg，只改变缩放，这样就不会“闪”一下回正了 */
+.avatar:active {
+    transform: scale(0.95) rotate(15deg); /* ✅ 压扁，但依然歪着！ */
+    transition: transform 0.1s; /* 极快响应 */
+    filter: brightness(0.95);
+}
+
+/* 3. 弹起动画状态 (由 JS 添加 .popping 类) */
+.avatar.popping {
+    /* 调用 easter-egg.css 里的动画 */
+    animation: avatar-pop 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .hero h1 { font-size: 3rem; margin-bottom: 10px; color: var(--text-color); }
@@ -281,6 +302,24 @@ nav a:hover {
 /* 黑夜模式：发红光 */
 [data-theme="dark"] .btn-netease {
     box-shadow: 0 0 10px #E60026; /* 红色霓虹光晕 */
+}
+
+/* --- 资源下载按钮样式 --- */
+.btn-download {
+    background-color: #9b59b6; /* 紫色 */
+    margin-left: 15px; /* ✅ 关键：这就把左边的按钮推开了 */
+    box-shadow: 4px 4px 0px #e1bee7; /* 浅紫阴影 */
+    color: white; /* 确保文字白色 */
+}
+
+/* 鼠标悬停 */
+.btn-download:hover {
+    box-shadow: 6px 6px 0px #e1bee7;
+}
+
+/* 黑夜模式：发紫光 */
+[data-theme="dark"] .btn-download {
+    box-shadow: 0 0 10px #9b59b6;
 }
 
 /* =========================================

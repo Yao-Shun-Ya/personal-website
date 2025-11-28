@@ -1,0 +1,146 @@
+/* =========================================
+   🥚 彩蛋特效样式 (easter-egg.css - 完美衔接版)
+   ========================================= */
+
+/* 1. 🌀 头像爆发动画 (无缝衔接版) */
+/* 核心逻辑：整个动画过程都保持在 15deg 左右摆动，绝不回正 */
+@keyframes avatar-pop {
+    0% { 
+        /* 承接 :active 状态 (压扁 + 歪头) */
+        transform: scale(0.95) rotate(15deg); 
+    }
+    30% { 
+        /* 猛烈弹开！撑大到 1.25倍，稍微往回转一点增加动感 */
+        transform: scale(1.25) rotate(10deg); 
+    }
+    50% { 
+        /* 回缩 */
+        transform: scale(0.95) rotate(18deg); 
+    }
+    70% { 
+        /* 小幅回弹 */
+        transform: scale(1.05) rotate(14deg); 
+    }
+    100% { 
+        /* 最终回到 :hover 状态 (1.1倍 + 15度) */
+        /* 这样动画结束时，刚好和鼠标悬停状态重合，无缝连接 */
+        transform: scale(1.1) rotate(15deg); 
+    }
+}
+
+.avatar.popping {
+    animation: avatar-pop 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 2. 纸屑粒子 */
+.confetti-particle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-green);
+    z-index: 9999;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+/* 3. 彩蛋弹窗遮罩 */
+.easter-modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.easter-modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 4. 彩蛋卡片本体 */
+.easter-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    border: 4px solid var(--accent-pink);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-width: 90%;
+    width: 400px;
+    transform: scale(0.5) translateY(100px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.easter-modal-backdrop.active .easter-card {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* 装饰元素 */
+.easter-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: jelly-bounce 2s infinite; 
+}
+
+.easter-card h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+.highlight-text {
+    font-size: 1.5rem;
+    color: var(--accent-pink);
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: 'Foxi', cursive; 
+}
+
+.sub-text {
+    color: #888;
+    font-size: 1rem;
+}
+
+/* 关闭按钮 */
+.easter-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.05);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.easter-close-btn:hover {
+    background: var(--accent-pink);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 768px) {
+    .easter-card {
+        padding: 30px 20px;
+        width: 85%;
+    }
+    .highlight-text { font-size: 1.3rem; }
+}

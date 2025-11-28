@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源下载 | 爻舜</title>
+    
+    <link rel="icon" href="/Picture/头像.jpg" type="image/jpeg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link href="../style.css" rel="stylesheet"> 
+    <link href="style.css" rel="stylesheet">
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+    <style>.preload * { transition: none !important; }</style>
+</head>
+
+<body class="preload"> 
+    <div class="overlay-backdrop"></div>
+    <header>
+        <div class="logo">🎶 爻舜 / Download</div>
+        <nav>
+            <ul>
+                <li><a href="/home">返回主页</a></li>
+            </ul>
+        </nav>
+        
+        <button id="theme-toggle" class="theme-btn" aria-label="切换黑夜模式">
+            <span class="icon-wrapper sun">☀️</span>
+            <span class="icon-wrapper moon">🌙</span>
+        </button>
+    </header>
+
+    <section class="download-container">
+        <h1 class="page-title">📂 资源小仓库</h1>
+        
+        <div class="filter-bar">
+            <div class="category-group" id="category-group"></div>
+            
+            <div class="sort-switch" id="sort-switch" data-val="newest">
+                <div class="switch-slider"></div>
+                
+                <div class="switch-opt active" data-type="newest">📅 新到旧</div>
+                <div class="switch-opt" data-type="oldest">📅 旧到新</div>
+            </div>
+        </div>
+
+        <div class="resource-grid" id="resource-grid"></div>
+
+        <a href="/home" class="back-link">← 回到主页</a>
+    </section>
+
+    <footer>
+        <p>Designed with <span class="heart">♥</span> for 爻舜</p>
+        <p>联系邮箱: 2720356281@qq.com</p>
+        <p><br>此网站本人已开源</p>
+        <p>github：<a href="https://github.com/Yao-Shun-Ya/personal-website" target="_blank">https://github.com/Yao-Shun-Ya/personal-website（可点击跳转）</a></p>
+    </footer>
+
+    <script src="resources.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

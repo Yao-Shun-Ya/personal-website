@@ -4,8 +4,13 @@
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. 初始化黑夜模式 (带果冻动画)
+    // 1. 初始化黑夜模式 (绑定按钮事件)
     initTheme();
+
+    // ⭐ 核心修复：页面加载完毕后，移除禁用动画的类，恢复过渡效果
+    setTimeout(() => {
+        document.body.classList.remove('preload');
+    }, 100);
 
     // 2. 加载精选视频
     loadFeaturedVideos();
@@ -20,15 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function initTheme() {
     const themeBtn = document.getElementById('theme-toggle');
-    const html = document.documentElement; // 获取 <html> 标签
+    const html = document.documentElement; 
 
-    // 1. 检查本地存储是否有用户之前的选择
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        html.setAttribute('data-theme', 'dark');
-    }
+    // (注意：初始化读取 localstorage 的逻辑已经移到 index.html 的 head 里了，这里只负责按钮)
 
-    // 2. 按钮点击事件
+    // 按钮点击事件
     if(themeBtn) {
         themeBtn.addEventListener('click', () => {
             // --- A. 触发果冻弹跳动画 ---
@@ -57,13 +58,12 @@ function initTheme() {
 
 /**
  * 功能 2：加载精选视频列表 (手动配置模式)
- * 优点：加载速度极快，不会出现网络报错
  */
 function loadFeaturedVideos() {
     const container = document.querySelector(".portfolio-grid");
     if(container) container.innerHTML = ""; 
 
-    // ⭐ 在这里配置你的视频信息
+    // 视频配置
     const myVideos = [
         {
             title: "《A Seat For You》男声翻唱",
@@ -85,7 +85,6 @@ function loadFeaturedVideos() {
         }
     ];
 
-    // 循环生成卡片
     myVideos.forEach((item, index) => {
         const card = document.createElement("a");
         card.className = "card";
@@ -105,37 +104,31 @@ function loadFeaturedVideos() {
         addRandomHoverEffect(card);
 
         container.appendChild(card);
-        // 添加进场动画延迟，实现依次浮入效果
+        // 添加进场动画延迟
         setTimeout(() => card.classList.add("visible"), index * 150);
     });
 }
 
 /**
- * ⭐ 功能 3 (核心特效)：影院聚焦模式 + 随机歪头
- * 鼠标移入时：背景变暗 + 卡片放大 + 随机角度歪一下
+ * ⭐ 功能 3：影院聚焦模式 + 随机歪头
  */
 function addRandomHoverEffect(card) {
     const body = document.body;
 
     card.addEventListener('mouseenter', () => {
-        // 1. 计算随机角度 (-6度 到 +6度)
-        // Math.random() 生成 0-1，减 0.5 变 -0.5~0.5，乘 12 变 -6~6
+        // 计算随机角度 (-6度 到 +6度)
         const randomAngle = (Math.random() - 0.5) * 12;
 
-        // 2. 用 JS 动态设置 transform：
-        //    scale(1.25): 放大 1.25 倍 (视觉聚焦)
-        //    rotate(...): 随机歪头 (俏皮感)
-        //    translateY(-15px): 稍微向上浮动
+        // 设置 transform：放大 + 歪头 + 上浮
         card.style.transform = `scale(1.25) translateY(-15px) rotate(${randomAngle}deg)`;
 
-        // 3. 激活背景遮罩 (body上的类) 和 层级提升 (card上的类)
+        // 激活背景遮罩
         body.classList.add('has-focused-card');
         card.classList.add('is-focused');
     });
 
     card.addEventListener('mouseleave', () => {
-        // 4. 鼠标离开：清空内联样式，移除类名
-        //    让 CSS 的 .card.visible (rotate(0)) 重新生效，平滑归位
+        // 复原
         card.style.transform = ''; 
         body.classList.remove('has-focused-card');
         card.classList.remove('is-focused');
@@ -143,13 +136,12 @@ function addRandomHoverEffect(card) {
 }
 
 /**
- * 功能 4：平滑滚动逻辑
- * 点击导航栏链接时，页面丝滑滑动到对应位置
+ * 功能 4：平滑滚动
  */
 function addSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault(); // 阻止默认的生硬跳转
+            e.preventDefault(); 
             
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);

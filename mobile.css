@@ -78,7 +78,8 @@
     }
 
     .btn-bilibili, 
-    .btn-netease {
+    .btn-netease,
+    .btn-download {
         margin-left: 0;
     }
 
