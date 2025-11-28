@@ -99,6 +99,9 @@ personal-website/
 ├── Font/                  # 字体文件
 └── Picture/               # 静态资源库
 ```
+
+---
+
 ## 🎨 设计哲学 (Design Philosophy)
 
 > **"Warmth in the Glitch"**
