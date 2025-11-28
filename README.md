@@ -102,6 +102,67 @@ personal-website/
 
 ---
 
+
+## 🚀 食用指南 (Getting Started)
+
+### 本地运行
+不需要 `npm`，不需要 `build`，开箱即用。
+1.  克隆仓库：
+    ```bash
+    git clone [https://github.com/Yao-Shun-Ya/personal-website.git](https://github.com/Yao-Shun-Ya/personal-website.git)
+    ```
+2.  双击 `index.html` 直接打开。
+3.  **Done.**
+
+*(推荐使用 VS Code 的 "Live Server" 插件运行，体验更佳。)*
+
+### 自定义配置
+想改成你自己的？改这几个文件就够了：
+
+1.  **修改视频**：`script.js` -> `loadFeaturedVideos` 函数。
+2.  **修改相册**：`gallery.js` -> `galleryConfig` 对象。
+3.  **添加下载资源**：`download/resources.js` -> 直接在数组里加 JSON 对象。
+
+---
+
+## 🌐 部署运维 (Deployment)
+
+本项目完美支持 **Nginx** 部署。
+
+### Nginx 配置示例
+为了让 `/download` 子站和主站完美共存，且支持 HTTPS 跳转，推荐配置如下：
+
+<details>
+<summary>点击展开 Nginx 配置代码</summary>
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+
+    # SSL 配置...
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.key;
+
+    # ✅ 核心：指向包含 index.html 和 download 文件夹的根目录
+    root /website; 
+    index index.html;
+
+    # 首页路由
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # 下载页路由 (自动寻找 /website/download/index.html)
+    location /download {
+        try_files $uri $uri/ /download/index.html;
+    }
+}
+```
+
+---
+
+
 ## 🎨 设计哲学 (Design Philosophy)
 
 > **"Warmth in the Glitch"**
@@ -144,10 +205,9 @@ personal-website/
 
 ## ❤️ 致谢
 
-* 感谢 **Gemini** 的倾力相助，不仅写代码，还教会了我什么是“优雅的降级”和“物理惯性”。
-* 感谢 **我自己** 吃苦耐劳，为了调那个 RGB 边框的动画参数，干到第二天早上六点半。
+* 感谢 **Gemini** 的倾力相助，果然好用。
+* 感谢 **我自己** 吃苦耐劳，干到第二天早上六点半。
 * 感谢 **StackOverflow** 和 **MDN**，没有你们就没有这个网站。
-* 感谢 **Chilichill** 和 **Aimer** 的音乐提供的灵感。
 
 ---
 
