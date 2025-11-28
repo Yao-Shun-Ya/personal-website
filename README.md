@@ -159,7 +159,8 @@ server {
     }
 }
 ```
-<details>
+</details>
+
 
 ---
 
