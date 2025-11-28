@@ -159,6 +159,7 @@ server {
     }
 }
 ```
+<details>
 
 ---
 
