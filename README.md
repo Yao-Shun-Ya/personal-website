@@ -87,7 +87,7 @@ personal-website/
 不需要 `npm install`，不需要 `webpack`，不需要 `build`。
 1.  克隆仓库：
     ```bash
-    git clone [https://github.com/your-username/personal-website.git](https://github.com/your-username/personal-website.git)
+    git clone https://github.com/Yao-Shun-Ya/personal-website.git
     ```
 2.  双击 `index.html`。
 3.  **Done.** 就是这么简单。

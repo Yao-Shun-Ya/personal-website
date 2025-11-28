@@ -22,13 +22,7 @@ function initTheme() {
     const themeBtn = document.getElementById('theme-toggle');
     const html = document.documentElement; // 获取 <html> 标签
 
-    // 1. 检查本地存储是否有用户之前的选择
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        html.setAttribute('data-theme', 'dark');
-    }
-
-    // 2. 按钮点击事件
+    //  按钮点击事件
     if(themeBtn) {
         themeBtn.addEventListener('click', () => {
             // --- A. 触发果冻弹跳动画 ---
