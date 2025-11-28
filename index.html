@@ -7,7 +7,25 @@
     <title>我的奇奇怪怪个人页 | 爻舜</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    
+    <script>
+        (function() {
+            // 执行逻辑：在页面渲染前决定页面颜色，以防止访问网站时遇到“闪光弹”
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const html = document.documentElement;
+            
+            // 逻辑优先级：
+            // 1. 如果用户之前手动选了 Dark -> 变黑
+            // 2. 如果用户没选过 (null)，但系统是 Dark -> 变黑
+            // 3. 其他情况 (用户选了Light 或 系统是Light) -> 默认 (不做操作即为浅色)
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                html.setAttribute('data-theme', 'dark');
+            } else {
+                // 确保清理掉可能存在的属性，保证是浅色
+                html.removeAttribute('data-theme');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">   <link rel="stylesheet" href="gallery.css"> <link rel="stylesheet" href="mobile.css">
 </head>
 
