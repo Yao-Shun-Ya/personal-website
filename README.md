@@ -107,6 +107,9 @@ personal-website/
 ├── Font/                  # 字体文件
 └── Picture/               # 静态资源库
 ```
+
+---
+
 ## 🚀 食用指南 (Getting Started)
 
 ### 本地运行
@@ -164,6 +167,8 @@ server {
 }
 ```
 </details>
+
+---
 
 ## 🎨 设计哲学 (Design Philosophy)
 
