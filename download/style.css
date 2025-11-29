@@ -498,15 +498,25 @@ header {
     .card-body .note { font-size: 0.8rem; -webkit-line-clamp: 2; line-clamp: 2; margin-bottom: 0; }
     .card-footer { padding: 8px 10px; flex-direction: column; gap: 5px; align-items: stretch; }
     .file-info { font-size: 0.75rem; text-align: center; }
-    .btn-mini { width: 100%; text-align: center; padding: 4px 0; font-size: 0.85rem; }
     
+    /* 修复箭头大小，避免在手机上太大 */
+    .card-footer span:last-child { font-size: 1.2rem !important; text-align: center; } 
+
+    /* ✅ 修复 3：展开卡片手机布局优化 */
     .resource-overlay {
         grid-template-columns: 1fr;
-        grid-template-rows: 250px 1fr;
+        /* 改为比例布局：图片占 35%，内容占剩下 */
+        grid-template-rows: 35% 1fr; 
     }
-    .overlay-content { padding: 25px; }
-    .overlay-content h2 { font-size: 1.6rem; }
-    .close-btn { top: 15px; right: 15px; background: rgba(255,255,255,0.8); color: black; }
+    
+    .overlay-content { 
+        padding: 20px; 
+    }
+    
+    .overlay-content h2 { font-size: 1.4rem; }
+    .overlay-content .desc { font-size: 1rem; }
+    
+    .close-btn { top: 10px; right: 10px; width: 32px; height: 32px; background: rgba(255,255,255,0.9); color: black; font-size: 1.2rem; }
 
     .overlay-preview {
         border-radius: 17px 17px 0 0;
@@ -514,4 +524,22 @@ header {
     .overlay-content {
         border-radius: 0 0 17px 17px;
     }
+}
+
+/* =========================================
+   终极链接样式修复 (Link Visibility)
+   ========================================= */
+.overlay-content .desc a {
+    color: var(--accent-pink) !important; /* 强制粉色 */
+    text-decoration: underline !important;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    z-index: 10; /* 确保在最上层 */
+    pointer-events: auto !important; /* 强制可点击 */
+}
+
+.overlay-content .desc a:hover {
+    color: var(--accent-green) !important;
+    text-decoration: none !important;
 }

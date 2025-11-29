@@ -1,31 +1,62 @@
 // =========================================
-// Download 页面逻辑 (Script.js - 打字机版)
+// Download 页面逻辑 (Script.js - 全功能整合版)
 // =========================================
 
 document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => document.body.classList.remove('preload'), 50);
     initThemeToggle();
     if (typeof resources !== 'undefined') initResourceManager();
+    
+    // ✅ 找回丢失的导航栏逻辑
+    initSmartNavbar();
 });
 
+// --- 1. 智能导航栏逻辑 (含居中修复) ---
+function initSmartNavbar() {
+    const header = document.querySelector('header');
+    let lastScrollY = window.scrollY;
+    let isHeaderVisible = true;
+
+    // 确保有过渡动画
+    header.style.transition = 'transform 0.3s ease-in-out';
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        // 向下滚 -> 隐藏 (保留 X 轴 -50% 居中)
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+            if (isHeaderVisible) {
+                header.style.transform = 'translate(-50%, -200%)'; 
+                isHeaderVisible = false;
+            }
+        } 
+        // 向上滚 -> 显示 (归位)
+        else if (currentScrollY < lastScrollY) {
+            if (!isHeaderVisible) {
+                header.style.transform = 'translate(-50%, 0)'; 
+                isHeaderVisible = true;
+            }
+        }
+
+        lastScrollY = currentScrollY;
+    });
+}
+
+// --- 2. 资源管理与卡片逻辑 ---
 function initResourceManager() {
     const grid = document.getElementById('resource-grid');
     const categoryContainer = document.getElementById('category-group');
     const sortSwitch = document.getElementById('sort-switch');
     const backdrop = document.querySelector('.overlay-backdrop');
 
-    // 状态机
     let appState = 'IDLE'; 
     let activeCardInfo = null; 
     let activeOverlay = null;  
-    
-    // ⭐ 新增：打字机定时器存储变量
     let typewriterTimer = null;
 
     let currentFilter = 'all';
     let currentSort = 'newest';
 
-    // --- 渲染逻辑 (保持不变) ---
     const renderButtons = () => {
         categoryContainer.innerHTML = categoryConfig.map(cat => {
             const activeClass = cat.type === 'all' ? 'active' : '';
@@ -48,6 +79,13 @@ function initResourceManager() {
         sortSwitch.addEventListener('click', () => {
             currentSort = (currentSort === 'newest') ? 'oldest' : 'newest';
             sortSwitch.setAttribute('data-val', currentSort);
+            
+            const opts = sortSwitch.querySelectorAll('.switch-opt');
+            opts.forEach(opt => {
+                if(opt.dataset.type === currentSort) opt.classList.add('active');
+                else opt.classList.remove('active');
+            });
+            
             renderCards();
         });
     }
@@ -67,7 +105,10 @@ function initResourceManager() {
             return `<div class="resource-card animate-in" data-id="${item.id}">
                 <div class="card-preview">${previewHtml}</div>
                 <div class="card-body"><h3>${item.title}</h3><p class="date-tag">📅 ${item.date}</p><p class="note">${item.desc}</p></div>
-                <div class="card-footer"><span class="file-info">${item.size}</span><span class="btn-mini">查看详情</span></div>
+                <div class="card-footer">
+                    <span class="file-info">${item.size}</span>
+                    <span style="color:var(--accent-green); font-size:1.4rem; font-weight:bold;">→</span>
+                </div>
             </div>`;
         }).join('');
         
@@ -76,24 +117,63 @@ function initResourceManager() {
         });
     };
 
-    // --- ⭐ 核心：打字机功能 ---
-    const startTypewriter = (text, element) => {
-        element.textContent = ""; // 清空内容
+    // --- ⭐ 核心：打字机功能 (DOM 遍历版 - 确保链接可点击) ---
+    const startTypewriter = (htmlContent, element) => {
+        // 1. 插入完整 HTML
+        element.innerHTML = htmlContent;
+
+        // 2. 递归查找文本节点
+        const getTextNodes = (node) => {
+            let textNodes = [];
+            if (node.nodeType === 3) { 
+                if (node.nodeValue.replace(/\n/g, '').length > 0) {
+                    textNodes.push(node);
+                }
+            } else {
+                node.childNodes.forEach(child => {
+                    textNodes = textNodes.concat(getTextNodes(child));
+                });
+            }
+            return textNodes;
+        };
+
+        const textNodes = getTextNodes(element);
+        const allSpans = [];
+
+        // 3. 包裹字符
+        textNodes.forEach(node => {
+            const wrapper = document.createDocumentFragment();
+            const text = node.nodeValue;
+            for (let char of text) {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.style.opacity = '0';
+                wrapper.appendChild(span);
+                allSpans.push(span);
+            }
+            node.parentNode.replaceChild(wrapper, node);
+        });
+
+        // 4. 逐个显示
         let i = 0;
-        
-        // 定义递归打字函数
-        const type = () => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
+        const reveal = () => {
+            if (i < allSpans.length) {
+                allSpans[i].style.opacity = '1'; 
                 i++;
-                // 递归调用，设置打字速度 (20ms/字)
-                typewriterTimer = setTimeout(type, 50); 
+                typewriterTimer = setTimeout(reveal, 20); 
+            } else {
+                // 动画结束，双重保险：强制激活所有链接
+                const links = element.querySelectorAll('a');
+                links.forEach(link => {
+                    link.style.pointerEvents = 'auto';
+                    link.style.color = 'var(--accent-pink)';
+                    link.style.textDecoration = 'underline';
+                });
             }
         };
-        type(); // 开始打字
+        reveal();
     };
 
-    // --- 打开卡片 ---
     const openCard = (card) => {
         if (appState !== 'IDLE') return;
         appState = 'OPENING';
@@ -140,8 +220,8 @@ function initResourceManager() {
             targetWidth = Math.min(900, window.innerWidth * 0.9);
             targetHeight = Math.min(550, window.innerHeight * 0.85);
         } else {
-            targetWidth = window.innerWidth * 0.92;
-            targetHeight = window.innerHeight * 0.85;
+            targetWidth = window.innerWidth * 0.9;
+            targetHeight = window.innerHeight * 0.7;
         }
         targetLeft = (window.innerWidth - targetWidth) / 2;
         targetTop = (window.innerHeight - targetHeight) / 2;
@@ -156,8 +236,6 @@ function initResourceManager() {
             
             setTimeout(() => {
                 appState = 'OPEN';
-                
-                // ⭐ 修改点：动画结束后，触发打字机
                 const descBox = overlay.querySelector('.desc');
                 if (descBox && data.desc) {
                     startTypewriter(data.desc, descBox);
@@ -169,11 +247,9 @@ function initResourceManager() {
         closeBtn.onclick = closeCard;
     };
 
-    // --- 关闭卡片 ---
     const closeCard = () => {
         if (appState !== 'OPEN') return;
         
-        // ⭐ 修改点：关闭时立刻停止打字
         if (typewriterTimer) clearTimeout(typewriterTimer);
 
         appState = 'CLOSING';
@@ -213,7 +289,7 @@ function initResourceManager() {
     };
 
     const forceReset = () => {
-        if (typewriterTimer) clearTimeout(typewriterTimer); // 保底清理
+        if (typewriterTimer) clearTimeout(typewriterTimer);
         document.body.classList.remove('lock-scroll');
         backdrop.classList.remove('active');
         document.querySelectorAll('.resource-overlay').forEach(el => el.remove());
