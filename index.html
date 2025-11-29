@@ -26,7 +26,13 @@
         }
     </style>
 
-    <link rel="stylesheet" href="style.css">       <link rel="stylesheet" href="gallery.css">     <link rel="stylesheet" href="mobile.css">      <link rel="stylesheet" href="easter-egg.css">  </head>
+    <link rel="stylesheet" href="style.css">       
+    <link rel="stylesheet" href="gallery.css">     
+    <link rel="stylesheet" href="mobile.css">      
+    <link rel="stylesheet" href="easter-egg.css">
+    
+    <link rel="stylesheet" href="player.css">
+</head>
 
 <body class="preload">
 
@@ -132,14 +138,53 @@
             <button class="easter-close-btn">&times;</button>
             <div class="easter-content">
                 <div class="easter-icon">🎉</div>
-                <h2>哇！被你发现了！</h2>
+                <h2>哇！被你发现啦！</h2>
                 <p class="highlight-text">感谢生命中的每一个人</p>
-                <p class="sub-text">✨ 感谢你可能听过我的作品 ✨</p>
+                <p class="sub-text">✨ 感谢欣赏过我作品的每个你 ✨</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="music-player" class="music-player">
+        <ul id="playlist-ul" class="playlist">
+            </ul>
+
+        <div class="player-handle">
+            <span class="player-title">🎵 舜の播放列表</span>
+            <button id="toggle-playlist" aria-label="显示/隐藏列表">≣</button>
+        </div>
+
+        <div class="player-body">
+            <div class="cover-spin"></div>
+            <div class="song-info">
+                <h4 id="current-song-title">选择一首歌吧~</h4>
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="time-display">
+                    <span id="curr-time">0:00</span> / <span id="dur-time">0:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <button id="prev-btn">⏮</button>
+            <button id="play-btn">▶</button>
+            <button id="next-btn">⏭</button>
+            
+            <div class="volume-container" title="拖动调节音量">
+                <div id="volume-knob" class="knob">
+                    <div class="knob-indicator"></div>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="songs.js"></script>
+    <script src="player.js"></script>
+    
     <script src="script.js"></script>
     <script src="gallery.js"></script> 
-    <script src="easter-egg.js"></script> </body>
+    <script src="easter-egg.js"></script>
+</body>
 </html>

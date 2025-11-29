@@ -1,0 +1,289 @@
+/* =========================================
+   🎵 悬浮播放器样式 (player.css - 磁吸版)
+   ========================================= */
+
+.music-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 280px;
+    
+    background: var(--header-bg, rgba(255, 255, 255, 0.85)); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    
+    /* 默认阴影 */
+    box-shadow: 0 5px 20px var(--shadow-color, rgba(0,0,0,0.2));
+    
+    z-index: 9999;
+    font-family: 'ZCOOL KuaiLe', cursive; 
+    color: var(--text-color, #333);
+    
+    overflow: visible; 
+
+    /* ✨ 关键改动：Transform 的过渡必须非常短，这样磁吸才跟手 */
+    /* Box-shadow 和 border 依然保持慢速过渡，做呼吸感 */
+    transition: transform 0.1s ease-out, 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease;
+    
+    /* 性能优化：告诉浏览器这货要动 */
+    will-change: transform, box-shadow;
+}
+
+/* 注意：删除了 .music-player:hover 的样式，全部由 JS 动态控制 */
+
+/* 2. 拖拽手柄 */
+.player-handle {
+    padding: 10px 15px;
+    background: rgba(0,0,0,0.03);
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    user-select: none; 
+    border-radius: 15px 15px 0 0;
+}
+.player-handle:active { cursor: grabbing; }
+
+.player-title { color: var(--accent-pink, #FADADD); }
+
+#toggle-playlist { 
+    background: none; border: none; cursor: pointer; 
+    font-size: 1.2rem; color: var(--text-color); 
+    transition: color 0.3s;
+}
+#toggle-playlist:hover { color: var(--accent-pink); }
+
+/* 3. 唱片与信息区 */
+.player-body { padding: 15px; display: flex; align-items: center; gap: 15px; }
+
+.cover-spin {
+    width: 45px; height: 45px; border-radius: 50%;
+    background: linear-gradient(45deg, var(--accent-pink), var(--accent-green));
+    animation: spin 3s linear infinite;
+    animation-play-state: paused;
+    flex-shrink: 0;
+}
+.cover-spin.playing { animation-play-state: running; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.song-info { flex: 1; overflow: hidden; }
+#current-song-title {
+    font-size: 0.9rem; margin-bottom: 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.progress-container {
+    height: 4px; background: rgba(0,0,0,0.1); 
+    border-radius: 2px; cursor: pointer; margin-bottom: 3px;
+    position: relative; 
+}
+.progress-container::after {
+    content: ''; position: absolute; top: -5px; bottom: -5px; left: 0; right: 0;
+}
+
+.progress-bar {
+    width: 0%; height: 100%; 
+    background: var(--accent-green, #B4E4DA); border-radius: 2px;
+}
+.time-display { font-size: 0.7rem; opacity: 0.6; display: flex; justify-content: space-between; }
+
+/* 4. 底部控制区 */
+.player-controls {
+    display: flex; 
+    align-items: center;
+    justify-content: space-around; 
+    padding: 10px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+.player-controls button {
+    background: none; border: none; cursor: pointer;
+    font-size: 1.5rem; color: var(--text-color);
+    transition: 0.2s;
+}
+.player-controls button:hover { color: var(--accent-pink); transform: scale(1.1); }
+
+/* 5. 播放列表 (向上展开) */
+.playlist {
+    position: absolute;
+    bottom: 100%;             
+    left: 0;
+    width: 100%;
+    max-height: 0;            
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px 15px 0 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: -1;              
+    margin-bottom: -10px;     
+    padding-bottom: 10px;     
+    pointer-events: none;     
+}
+.playlist.show { 
+    max-height: 200px;
+    opacity: 1;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    pointer-events: auto; 
+}
+.playlist li {
+    padding: 8px 15px; font-size: 0.85rem; cursor: pointer;
+    border-bottom: 1px solid rgba(0,0,0,0.02);
+    transition: background 0.2s;
+}
+.playlist li:hover { background: rgba(0,0,0,0.05); }
+.playlist li.active { color: var(--accent-pink); font-weight: bold; }
+
+[data-theme="dark"] .playlist {
+    background: rgba(30, 30, 40, 0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* 6. 音量旋钮 */
+.volume-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    cursor: ns-resize; 
+}
+
+.knob {
+    width: 26px;
+    height: 26px;
+    background: radial-gradient(circle at 30% 30%, #eee, #ccc);
+    border-radius: 50%;
+    border: 1px solid #999;
+    position: relative;
+    transform: rotate(-135deg); 
+    
+    /* 移除 transition 保证拖动绝对跟手 */
+    transition: box-shadow 0.1s linear; 
+}
+
+.knob-indicator {
+    position: absolute;
+    top: 4px; left: 50%;
+    transform: translateX(-50%);
+    width: 3px; height: 3px;
+    background-color: var(--accent-pink, #FADADD);
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] .knob {
+    background: radial-gradient(circle at 30% 30%, #555, #222);
+    border-color: #000;
+}
+
+/* ============================
+   📱 7. 移动端深度适配 (精致小方块版)
+   ============================ */
+@media screen and (max-width: 768px) {
+    .music-player { 
+        /* --- 1. 容器定型：小圆角方块 --- */
+        width: 145px;          /* 固定小宽度 */
+        height: auto;          /* 高度自适应 */
+        
+        /* 位置：固定在右下角，单手好按 */
+        left: auto;
+        right: 20px; 
+        bottom: 90px;          /*稍微高一点，避开某些手机的底部横条 */
+        
+        /* 布局：改为竖向排列 (Column) */
+        display: flex;
+        flex-direction: column;
+        
+        border-radius: 24px;   /* 大圆角，类似 iOS 小组件 */
+        
+        /* 强制重置样式 */
+        transform: none !important; 
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        margin: 0;
+    }
+
+    /* --- 2. 顶部手柄区 --- */
+    .player-handle {
+        padding: 8px 10px 0 10px; /* 上方留白 */
+        justify-content: flex-end; /* 只显示列表按钮，靠右 */
+        background: transparent;
+        border: none;
+    }
+    
+    /* 隐藏“舜の播放列表”文字，保持方块简洁 */
+    .player-title { display: none; }
+    
+    /* 列表按钮稍微大一点，方便点 */
+    #toggle-playlist { font-size: 1.2rem; }
+
+    /* --- 3. 核心内容区 (竖排) --- */
+    .player-body { 
+        flex-direction: column; /* 上下排列 */
+        padding: 5px 10px; 
+        gap: 8px; 
+        text-align: center;
+    }
+
+    /* 唱片变大一点，作为视觉中心 */
+    .cover-spin {
+        width: 55px; 
+        height: 55px; 
+        margin: 0 auto; /* 居中 */
+        border: 3px solid rgba(255,255,255,0.3); /* 加个光圈更有质感 */
+    }
+
+    .song-info { 
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #current-song-title {
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+        max-width: 120px; /* 限制宽度防止撑开 */
+        text-align: center;
+    }
+
+    /* 隐藏手机端累赘的进度条和时间，追求极致紧凑 */
+    .progress-container, .time-display { display: none; }
+
+    /* --- 4. 底部控制区 --- */
+    .player-controls {
+        padding: 5px 0 15px 0; /* 下方多留点白 */
+        border: none;
+        width: 100%;
+        justify-content: center; /* 按钮居中 */
+        gap: 15px; /* 按钮间距 */
+    }
+    
+    .player-controls button {
+        font-size: 1.3rem; 
+    }
+
+    /* 手机端隐藏音量旋钮 (直接按手机音量键更好，省空间) */
+    .volume-container { display: none; }
+
+    /* --- 5. 列表弹出的适配 --- */
+    /* 列表从方块上方弹出来 */
+    .playlist {
+        width: 200px; /* 列表比播放器宽一点，体验更好 */
+        right: 0;     /* 靠右对齐 */
+        left: auto;   /* 取消靠左 */
+        border-radius: 15px;
+        bottom: 110%; /* 稍微离远一点 */
+    }
+    .playlist.show { max-height: 250px; }
+}
