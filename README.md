@@ -35,29 +35,33 @@
 
 这里是给面试官或者技术宅看的，证明我不是只会写 `console.log`。
 
-### 1. 📂 资源小仓库 (The Resource Sub-site)
-一个完全独立、功能完备的资源下载子站 (`/download`)。
-* **数据驱动渲染 (Data-Driven)**：告别手写 HTML，所有资源卡片通过 `resources.js` (JSON) 自动生成，维护极其优雅。
-* **FLIP 英雄转场 (Hero Transition)**：点击卡片时，它不会生硬地弹出，而是通过计算坐标差 (`getBoundingClientRect`)，从原位置**平滑飞跃**至屏幕中心展开，关闭时又能**无缝归位**。
+### 1. 🎵 磁吸式悬浮播放器 (Magnetic Music Player)
+一个完全手搓的全局音频组件，拒绝套用现成插件。
+* **磁吸交互 (Magnetic Effect)**：利用向量计算鼠标位置，实现“靠近即吸附、远离即回弹”的物理手感。
+* **拟物化旋钮 (Physics Knob)**：音量调节采用旋转交互，阻尼感适中，且带有动态光晕反馈。
+* **移动端小组件化**：在手机上自动形变为类似 iOS Widget 的小方块，操作直观。
+* **防呆设计**：拖拽与点击互斥逻辑，防止误触。
+
+### 2. 📂 资源小仓库 (The Resource Sub-site)
+一个功能完备的资源下载子站 (`/download`)，实现了 SPA (单页应用) 级的体验。
+* **FLIP 英雄转场 (Hero Transition)**：点击卡片时，通过计算坐标差 (`getBoundingClientRect`)，从原位置**平滑飞跃**至屏幕中心展开，关闭时又能**无缝归位**，拒绝生硬的弹窗。
 * **RGB 流光边框**：展开后的卡片带有**赛博朋克风格的旋转流光**，白天是莫兰迪极光色，晚上是高亮霓虹色。
-* **多维筛选**：支持按分类过滤（干音/工程/表情包）以及按时间排序。
+* **DOM 安全打字机**：重构了打字机逻辑，采用“先渲染后揭晓”策略，完美支持富文本（链接可点击），杜绝 HTML 结构崩坏。
+* **多维筛选**：支持按分类过滤以及滑动式的时间排序。
 
-### 2. 🌌 物理惯性无限画廊 (Physics-based Gallery)
+### 3. 🌌 物理惯性无限画廊 (Physics-based Gallery)
 位于主页的相册组件，手感极其丝滑。
-* **双向预加载 (Double-ended Buffering)**：为了防止快速滑动时出现“白边”，在渲染时将数据克隆并预留了 **双向 Buffer**。无论你怎么暴力拖拽，永远滑不到尽头。
-* **自研物理引擎**：实现了完整的触摸/鼠标手势监听。
-    * 计算手指离开屏幕时的**瞬时速度**。
-    * 引入**动量因子 (Momentum Factor)**，模拟真实世界的摩擦力与惯性。
-    * **智能吸附**：滑动结束时，自动计算最近的卡片位置并 Q 弹回正。
+* **双向预加载 (Double-ended Buffering)**：渲染时将数据克隆并预留了 **双向 Buffer**。无论你怎么暴力拖拽，永远滑不到尽头，彻底消除白边。
+* **自研物理引擎**：实现了完整的触摸/鼠标手势监听，计算瞬时速度并引入**动量因子 (Momentum Factor)**，模拟真实世界的摩擦力与惯性。
 
-### 3. 🌓 极致黑夜模式 (Ultimate Dark Mode)
+### 4. 🌓 极致黑夜模式 (Ultimate Dark Mode)
 * **防闪烁机制 (Anti-Flicker)**：通过 `<head>` 里的预加载脚本，在 DOM 渲染前锁定主题，彻底解决了刷新页面时“白屏一闪而过”的通病。
 * **果冻开关**：切换按钮实现了一个基于 `@keyframes` 的 **果冻弹跳 (Jelly Bounce)** 动画。
 * **全站适配**：从文字颜色到 RGB 边框流光，甚至遮罩层的模糊度，全部自动适配深色模式。
 
-### 4. 🥚 隐藏彩蛋 (Easter Eggs)
-* **头像交互**：点击头像会有果冻般的挤压感。
-* **连击触发**：偷偷告诉你，连续点击头像，屏幕会炸开五颜六色的纸屑（Confetti），并弹出一个写给你的感谢卡片。
+### 5. 🥚 隐藏彩蛋 (Easter Eggs)
+* **超级果冻头像**：点击头像会有极强的果冻挤压感（Scale + Rotate 联动）。
+* **连击触发**：偷偷告诉你，连续点击头像 **5次**，屏幕会炸开五颜六色的纸屑（Confetti），并弹出一个写给你的感谢卡片。
 
 ---
 
@@ -66,7 +70,7 @@
 主打一个“手搓”，拒绝臃肿的 `node_modules`。
 
 * **核心**：Semantic HTML5, CSS3 Variables, Vanilla JavaScript (ES6+)
-* **布局**：Flexbox, CSS Grid (响应式网格)
+* **布局**：Flexbox, CSS Grid (响应式网格), CSS Scrollbar Gutter
 * **动画**：CSS Transitions (贝塞尔曲线调教), Keyframes, FLIP Technique, Canvas (粒子特效)
 * **字体**：`Nunito`, `ZCOOL KuaiLe`, 以及手写风格的 `演示佛系体`。
 
@@ -74,7 +78,7 @@
 
 ## 📂 目录结构 (Structure)
 
-模块化设计，主站与子站逻辑分离，互不干扰。
+模块化设计，主站、子站、播放器逻辑完全分离，互不干扰。
 
 ```text
 personal-website/
@@ -82,6 +86,10 @@ personal-website/
 ├── style.css              # 全局核心样式 & 黑夜模式变量
 ├── mobile.css             # 移动端专用适配样式
 ├── script.js              # 主站逻辑 (视频加载、交互特效)
+│
+├── player.js              # 🎵 播放器核心逻辑 (磁吸、拖拽)
+├── player.css             # 播放器样式 (旋钮、列表)
+├── songs.js               # 🎵 歌单配置文件
 │
 ├── gallery.css            # 无限相册专用样式
 ├── gallery.js             # 无限相册核心逻辑 (物理惯性、Buffer算法)
@@ -91,18 +99,14 @@ personal-website/
 │
 ├── download/              # 📂 资源下载子站 (独立SPA风格)
 │   ├── index.html         # 下载页入口
-│   ├── style.css          # 下载页独立样式 (卡片网格、RGB边框)
-│   ├── script.js          # 下载页逻辑 (排序、筛选、FLIP动画)
+│   ├── style.css          # 下载页样式 (卡片网格、RGB边框、FLIP动画)
+│   ├── script.js          # 下载页逻辑 (排序、筛选、打字机)
 │   ├── resources.js       # 💾 资源数据库 (JSON配置)
 │   └── 资源仓库文件/       # 存放实际文件 (MP3/Zip等)
 │
 ├── Font/                  # 字体文件
 └── Picture/               # 静态资源库
 ```
-
----
-
-
 ## 🚀 食用指南 (Getting Started)
 
 ### 本地运行
@@ -161,10 +165,6 @@ server {
 ```
 </details>
 
-
----
-
-
 ## 🎨 设计哲学 (Design Philosophy)
 
 > **"Warmth in the Glitch"**
@@ -207,9 +207,10 @@ server {
 
 ## ❤️ 致谢
 
-* 感谢 **Gemini** 的倾力相助，果然好用。
-* 感谢 **我自己** 吃苦耐劳，干到第二天早上六点半。
+* 感谢 **Gemini** 的倾力相助，不仅写代码，还教会了我什么是“优雅的降级”和“物理惯性”。
+* 感谢 **我自己** 吃苦耐劳，为了调那个 RGB 边框的动画参数，干到第二天早上六点半。
 * 感谢 **StackOverflow** 和 **MDN**，没有你们就没有这个网站。
+* 感谢 **Chilichill** 和 **Aimer** 的音乐提供的灵感。
 
 ---
 
