@@ -94,27 +94,25 @@ header {
     padding: 15px 30px;
 }
 
-.logo { font-size: 1.8rem; /* 字体特殊，可以稍微调大一点点 */
-    color: var(--text-color);
-    font-family: 'Foxi', cursive; /* ✅ 应用佛系体 */ }
+.logo { font-size: 1.8rem; color: var(--text-color); font-family: 'Foxi', cursive; }
 nav ul { display: flex; gap: 20px; list-style: none; }
 
 nav a {
     padding: 8px 15px;
     border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
     transition: all 0.3s ease;
-    font-family: 'Foxi', cursive; /* ✅ 应用佛系体 */
-    font-size: 1.5rem; /* 手写体通常比标准体显得小，稍微加大一点易读性更好 */
+    font-family: 'Foxi', cursive;
+    font-size: 1.5rem;
 }
 
 nav a:hover {
     background-color: var(--accent-green);
-    color: white; /* 这里的文字颜色Hover保持白色 */
+    color: white; 
     transform: rotate(-2deg);
 }
 
 /* =========================================
-   ⭐ 新增特效：灵动的黑夜模式切换按钮
+   3.1 特效：灵动的黑夜模式切换按钮
    ========================================= */
 
 /* 1. 定义果冻弹跳动画 (Jelly Bounce Keyframes) */
@@ -130,7 +128,7 @@ nav a:hover {
 
 /* 2. 按钮容器基础样式 */
 .theme-btn {
-    position: relative; /* 为了让内部图标绝对定位 */
+    position: relative;
     background: var(--card-bg);
     border: 2px solid var(--accent-green);
     color: var(--text-color);
@@ -144,27 +142,24 @@ nav a:hover {
     align-items: center;
     margin-left: 20px;
     box-shadow: 0 0 5px var(--accent-green);
-    overflow: hidden; /* 防止图标飞出边界 */
-    /* 基础的 hover 过渡 */
+    overflow: hidden;
     transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
-/* 鼠标悬停时的轻微放大 (不旋转了，留给点击动画) */
 .theme-btn:hover {
     box-shadow: 0 0 15px var(--accent-green);
 }
 
-/* ⭐ 点击时的果冻动画类 (由 JS 添加) */
+/* 点击时的果冻动画类 (由 JS 添加) */
 .theme-btn.animate-bounce {
     animation: jelly-bounce 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-/* 3. 图标通用样式 (让它们重叠在一起) */
+/* 3. 图标通用样式 */
 .theme-btn .icon-wrapper {
-    position: absolute; /* 绝对定位，脱离文档流 */
+    position: absolute;
     top: 50%;
     left: 50%;
-    /* 居中，并设置过渡动画，使用贝塞尔曲线让运动更Q弹 */
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     display: flex;
     align-items: center;
@@ -173,36 +168,28 @@ nav a:hover {
     height: 100%;
 }
 
-/* --- 白天模式默认状态 (显示太阳，隐藏月亮) --- */
-
-/* 太阳：正常显示 */
+/* --- 白天模式默认状态 --- */
 .theme-btn .sun {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(0deg) scale(1);
 }
-
-/* 月亮：隐藏，旋转一定角度并缩小，准备登场 */
 .theme-btn .moon {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
 }
 
-/* --- 黑夜模式状态 (显示月亮，隐藏太阳) --- */
-
-/* 太阳：隐藏，旋转并缩小离开 */
+/* --- 黑夜模式状态 --- */
 [data-theme="dark"] .theme-btn .sun {
     opacity: 0;
     transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
 }
-
-/* 月亮：正常显示，旋转归位并放大 */
 [data-theme="dark"] .theme-btn .moon {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(0deg) scale(1);
 }
 
 /* =========================================
-   4. 英雄区域 (Hero Section) - 完美衔接版
+   4. 英雄区域 (Hero Section)
    ========================================= */
 .hero {
     text-align: center;
@@ -223,7 +210,6 @@ nav a:hover {
     margin-bottom: 20px;
     cursor: pointer;
     
-    /* 基础过渡：让悬停的变大变歪丝滑 */
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
                 border-color 0.3s, 
                 box-shadow 0.3s;
@@ -231,23 +217,19 @@ nav a:hover {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* 1. 悬停状态：是你喜欢的 1.1倍 + 15度歪头 */
 .avatar:hover {
-    transform: scale(1.1) rotate(15deg); /* ✅ 保持原样 */
+    transform: scale(1.1) rotate(15deg); 
     border-color: var(--accent-green);
     border-style: solid;
     box-shadow: 0 15px 30px var(--shadow-color);
 }
 
-/* 2. 按下状态：关键修复！ */
-/* 必须保持 15deg，只改变缩放，这样就不会“闪”一下回正了 */
 .avatar:active {
-    transform: scale(0.95) rotate(15deg); /* ✅ 压扁，但依然歪着！ */
-    transition: transform 0.1s; /* 极快响应 */
+    transform: scale(0.95) rotate(15deg); 
+    transition: transform 0.1s; 
     filter: brightness(0.95);
 }
 
-/* 3. 弹起动画状态 (由 JS 添加 .popping 类) */
 .avatar.popping {
     /* 调用 easter-egg.css 里的动画 */
     animation: avatar-pop 0.6s cubic-bezier(0.25, 1, 0.5, 1);
@@ -263,8 +245,7 @@ nav a:hover {
     display: inline-block;
     padding: 12px 30px;
     background-color: var(--accent-green);
-    color: var(--bg-color); /* 按钮文字跟随背景色反转，或者保持 white */
-    color: #fff; /* 强制白色看起来更清晰 */
+    color: #fff;
     font-family: 'ZCOOL KuaiLe', cursive;
     font-size: 1.2rem;
     border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
@@ -272,12 +253,12 @@ nav a:hover {
     transition: transform 0.2s;
 }
 
+/* 注意：普通的 hover 效果，下载按钮因为有 wrapper 动画所以会覆盖这个 */
 .btn:hover {
     transform: translate(-2px, -2px) scale(1.05);
     box-shadow: 6px 6px 0px var(--accent-yellow); 
 }
 
-/* 黑夜模式按钮发光 */
 [data-theme="dark"] .btn { box-shadow: 0 0 10px var(--accent-yellow); }
 
 .btn-bilibili {
@@ -289,37 +270,179 @@ nav a:hover {
 
 /* --- 网易云音乐按钮样式 --- */
 .btn-netease {
-    background-color: #E60026; /* 网易红 */
-    margin-left: 15px; /* 与左边按钮的间距 */
-    box-shadow: 4px 4px 0px #ffcccc; /* 浅红色立体阴影 */
+    background-color: #E60026; 
+    margin-left: 15px; 
+    box-shadow: 4px 4px 0px #ffcccc; 
 }
+.btn-netease:hover { box-shadow: 6px 6px 0px #ffcccc; }
+[data-theme="dark"] .btn-netease { box-shadow: 0 0 10px #E60026; }
 
-/* 鼠标悬停 */
-.btn-netease:hover {
-    box-shadow: 6px 6px 0px #ffcccc;
-}
-
-/* 黑夜模式：发红光 */
-[data-theme="dark"] .btn-netease {
-    box-shadow: 0 0 10px #E60026; /* 红色霓虹光晕 */
-}
-
-/* --- 资源下载按钮样式 --- */
+/* --- 资源下载按钮样式 (基础样式) --- */
 .btn-download {
-    background-color: #9b59b6; /* 紫色 */
-    margin-left: 15px; /* ✅ 关键：这就把左边的按钮推开了 */
-    box-shadow: 4px 4px 0px #e1bee7; /* 浅紫阴影 */
-    color: white; /* 确保文字白色 */
+    background-color: #9b59b6; 
+    margin-left: 15px; 
+    box-shadow: 4px 4px 0px #e1bee7; 
+    color: white; 
 }
 
-/* 鼠标悬停 */
-.btn-download:hover {
-    box-shadow: 6px 6px 0px #e1bee7;
+/* =========================================
+   ⭐ 新增特效：下载页霓虹灯牌指引 (包含动画修复)
+   ========================================= */
+
+/* 1. 容器：用于包裹灯牌和按钮 */
+.download-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 50px; 
+    margin-left: 15px; 
 }
 
-/* 黑夜模式：发紫光 */
-[data-theme="dark"] .btn-download {
-    box-shadow: 0 0 10px #9b59b6;
+/* 移动端适配 (包含在style.css中以确保生效) */
+@media screen and (max-width: 768px) {
+    .download-wrapper {
+        margin-left: 0;
+        width: 90%; 
+        margin-top: 60px;
+    }
+    .download-wrapper .btn-download {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/* 2. 霓虹灯牌主体盒子 */
+.neon-sign-box {
+    position: absolute;
+    bottom: 100%; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    min-width: 220px;
+    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    border: 2px solid #ff79c6;
+    box-shadow: 0 0 15px #ff79c6, inset 0 0 10px #ff79c6;
+    animation: sign-float 3s ease-in-out infinite alternate;
+    z-index: 10;
+    margin-bottom: 15px;
+}
+
+@keyframes sign-float {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* 3. ⭐ 核心特效：无缝流光背景 (旋转画布法) */
+.flowing-disco-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 8px;
+    overflow: hidden; /* 裁剪掉旋转后的多余部分 */
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.flowing-disco-bg::before {
+    content: '';
+    position: absolute;
+    /* 超大尺寸以覆盖旋转后的区域 */
+    width: 200%; 
+    height: 500%; 
+    top: -200%; 
+    left: -50%;
+    
+    /* 旋转 -45 度，将垂直渐变变为倾斜渐变 */
+    transform: rotate(-45deg);
+    
+    /* 使用 [to right] 垂直条纹，保证水平平铺 100% 无缝 */
+    background: linear-gradient(
+        to right, 
+        #ff0000, #ff79c6, #bd93f9, #8be9fd, #50fa7b, #f1fa8c, #ff0000
+    );
+    
+    /* 设定固定的循环宽度 200px */
+    background-size: 200px 100%;
+    mix-blend-mode: overlay;
+    
+    /* 执行位移动画 */
+    animation: disco-flow 2s linear infinite;
+}
+
+@keyframes disco-flow {
+    0% { background-position: 0 0; }
+    100% { 
+        /* 移动距离等于 background-size 的宽度，实现数学闭环 */
+        background-position: 200px 0; 
+    }
+}
+
+/* 4. 霓虹文字 */
+.neon-text-content {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 1.3rem;
+    color: #fff;
+    text-align: center;
+    text-shadow: 
+        0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff79c6, 0 0 30px #ff79c6, 0 0 40px #ff79c6;
+    animation: neon-flicker 2s infinite alternate;
+}
+
+@keyframes neon-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff79c6, 0 0 30px #ff79c6;
+    }
+    20%, 24%, 55% {
+        opacity: 0.8;
+        text-shadow: none; 
+    }
+}
+
+/* 5. 发光箭头 */
+.neon-arrow-down {
+    position: absolute;
+    bottom: -20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 20px solid #ff79c6; 
+    filter: drop-shadow(0 0 10px #ff79c6);
+    animation: arrow-pulse 1s infinite alternate;
+}
+
+@keyframes arrow-pulse {
+    0% { bottom: -20px; }
+    100% { bottom: -25px; }
+}
+
+/* 6. ⭐ 鼠标悬停交互：Q弹动画 (修复版) */
+.download-wrapper:hover .target-btn {
+    /* 关键修复：关闭 transition 防止干扰 animation */
+    transition: none; 
+
+    /* 保持强烈的紫色发光 */
+    box-shadow: 0 0 25px #9b59b6 !important; 
+    
+    /* 执行 Q 弹动画 */
+    animation: rubberBand 1s linear forwards;
+}
+
+/* 7. Q弹动画关键帧 */
+@keyframes rubberBand {
+  0% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+  100% { 
+      /* 动画结束后，保持放大 1.1 倍，模拟 Hover 效果 */
+      transform: scale3d(1.1, 1.1, 1); 
+  }
 }
 
 /* =========================================
@@ -361,13 +484,12 @@ nav a:hover {
 }
 
 .card {
-    background: var(--card-bg); /* 使用变量背景 */
+    background: var(--card-bg); 
     padding: 15px;
     border: 2px solid rgba(255,255,255,0.05);
     border-radius: 5px;
     box-shadow: 5px 5px 15px var(--shadow-color);
     
-    /* 进场动画初始状态 */
     transform: rotate(1deg) translateY(20px);
     opacity: 0;
     
@@ -375,8 +497,6 @@ nav a:hover {
 }
 
 .card:nth-child(even) { transform: rotate(-1deg) translateY(20px); }
-
-/* 进场完毕 */
 .card.visible { transform: rotate(0deg) translateY(0); opacity: 1; }
 
 .card-img {
@@ -395,21 +515,20 @@ nav a:hover {
     padding: 2px 8px;
     border-radius: 10px;
     font-size: 0.8rem;
-    color: #444; /* tag文字保持深色 */
+    color: #444; 
 }
 
 /* =========================================
    8. 关于我 (About)
    ========================================= */
 .about-container {
-    background-color: var(--card-bg); /* ✅ 使用变量，黑夜模式会变黑 */
+    background-color: var(--card-bg); 
     padding: 40px;
     border-radius: 20px;
     border: 2px solid var(--bg-color);
     box-shadow: 8px 8px 0px var(--accent-green);
 }
 
-/* 黑夜模式关于框发光 */
 [data-theme="dark"] .about-container { box-shadow: 0 0 15px var(--accent-pink); }
 
 .about-text { font-size: 1.1rem; margin-bottom: 20px; }
@@ -423,7 +542,6 @@ footer { text-align: center; padding: 50px 20px; opacity: 0.6; font-size: 0.9rem
 /* =========================================
    10. 影院聚焦模式 & 霓虹光效
    ========================================= */
-/* 背景遮罩层 */
 .focus-overlay {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -438,19 +556,235 @@ footer { text-align: center; padding: 50px 20px; opacity: 0.6; font-size: 0.9rem
 
 body.has-focused-card .focus-overlay { opacity: 1; pointer-events: auto; }
 
-/* 卡片聚焦状态 */
 .card.is-focused {
     position: relative;
     z-index: 1001;
     background-color: var(--card-bg);
     border-color: var(--accent-green);
-    /* 强阴影 */
     box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    /* Transform 由 JS 内联控制 */
 }
 
-/* 黑夜模式下的聚焦霓虹光效 */
 [data-theme="dark"] .card.is-focused {
     border-color: var(--accent-green);
-    box-shadow: 0 0 30px var(--accent-green) !important; /* 青色发光 */
+    box-shadow: 0 0 30px var(--accent-green) !important; 
+}
+
+/* =========================================
+   ⭐ 新增板块：爻の仓库 (Abstract Portal)
+   ========================================= */
+
+/* 1. 区域基础布局 */
+#warehouse {
+    padding-bottom: 100px;
+}
+
+/* ✅ 新增：把居中属性加给内部容器，这样就不会影响标题了 */
+.warehouse-container {
+    text-align: center;
+}
+
+.warehouse-desc {
+    opacity: 0.7;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    font-family: 'Foxi', cursive;
+}
+
+/* 2. 传送门主体 (Wrapper) */
+.portal-gate {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    text-decoration: none;
+    border-radius: 50%; /* 正圆形 */
+    cursor: pointer;
+    
+    /* 初始状态：轻微浮动 */
+    transform: translateY(0);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    /* 去除移动端点击高亮 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 3. 核心特效：旋转的能量漩涡 (The Vortex) */
+.portal-vortex {
+    position: absolute;
+    top: -10px; left: -10px; right: -10px; bottom: -10px; /* 比核心大一圈 */
+    border-radius: 50%;
+    z-index: 1;
+    
+    /* 抽象艺术：锥形渐变 */
+    background: conic-gradient(
+        var(--accent-pink),
+        var(--accent-green), 
+        var(--accent-yellow),
+        var(--accent-pink) /* 首尾相接 */
+    );
+    
+    /* 加上高斯模糊，让它看起来像光晕而不是色块 */
+    filter: blur(15px);
+    opacity: 0.8;
+    
+    /* 旋转动画 */
+    animation: portal-spin 4s linear infinite;
+    
+    transition: all 0.5s ease;
+}
+
+/* 黑夜模式下的漩涡：颜色更迷幻 */
+[data-theme="dark"] .portal-vortex {
+    background: conic-gradient(
+        #ff0055, #00ddff, #ae00ff, #ff0055
+    );
+    filter: blur(20px);
+    opacity: 0.9;
+}
+
+/* 旋转动画关键帧 */
+@keyframes portal-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 4. 视觉核心：磨砂玻璃中心 (The Core) */
+.portal-core {
+    position: relative;
+    z-index: 2; /* 浮在漩涡之上 */
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    
+    /* 磨砂玻璃质感 */
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* 边框发光 */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    transition: all 0.3s ease;
+    overflow: hidden; /* 保证内部文字不出界 */
+}
+
+/* 黑夜模式核心：深色玻璃 */
+[data-theme="dark"] .portal-core {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* 5. 文字样式修正与霓虹特效 */
+
+/* --- style.css --- */
+
+/* 副标题：进入异世界 */
+.portal-core .sub-text {
+    font-size: 1rem; /* 再稍微加大一点，提升识别度 */
+    margin-top: 5px;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-weight: bold; /* ⭐ 关键：加粗字体，防止被光晕吞没 */
+    letter-spacing: 1px; /* 字间距稍微拉开一点，防止光晕粘连 */
+    
+    /* --- ⭐ 白天模式修正 (Day Mode) --- */
+    /* 既然背景是浅色磨砂，文字必须深！ */
+    /* 使用深玫红 (#ff0055) 代替原来的淡粉色 */
+    color: #ea6f98; 
+    
+    /* 白天的光晕要克制： */
+    /* 只加一层淡淡的粉色光晕，主要靠颜色的对比度来突显 */
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+    
+    /* 执行闪烁动画 */
+    animation: portal-text-flicker 2s infinite;
+}
+
+/* --- 黑夜模式样式 (Night Mode) --- */
+/* 黑夜模式背景黑，所以可以用亮白色文字+强光晕，不用改 */
+[data-theme="dark"] .portal-core .sub-text {
+    color: #fff; 
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #ff00de,
+        0 0 20px #ff00de,
+        0 0 40px #ff00de; 
+}
+
+/* --- 动画修正 --- */
+@keyframes portal-text-flicker {
+    /* 状态 A: 亮 (完全不透明) */
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    /* 状态 B: 暗 (接触不良效果) */
+    /* ⭐ 修正：不要降到 0.5，改成 0.7，保证最暗的时候也能看清字 */
+    20%, 24%, 55% {
+        opacity: 0.7; 
+        color: #e4608c; /* 确保暗的时候也是深色 */
+    }
+}
+
+/* 针对黑夜模式的动画微调 (保持之前的强烈闪烁) */
+[data-theme="dark"] .portal-core .sub-text {
+    animation: portal-text-flicker-dark 2s infinite;
+}
+
+@keyframes portal-text-flicker-dark {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        filter: blur(0px);
+    }
+    20%, 24%, 55% {
+        opacity: 0.5;
+        filter: blur(1px);
+    }
+}
+
+/* =========================================
+   交互特效 (Interaction)
+   ========================================= */
+
+/* 悬停时：整体上浮 */
+.portal-gate:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+/* 悬停时：漩涡加速疯狂旋转，光晕变大 */
+.portal-gate:hover .portal-vortex {
+    animation: portal-spin 0.5s linear infinite; /* 极速旋转 */
+    filter: blur(25px); /* 光晕扩散 */
+    top: -20px; left: -20px; right: -20px; bottom: -20px; /* 范围变大 */
+}
+
+/* 悬停时：核心收缩，形成吸入感 */
+.portal-gate:hover .portal-core {
+    transform: scale(0.9);
+    background: rgba(255, 255, 255, 0.1); /* 变得更透明 */
+}
+
+/* 悬停时：文字故障效果 (简单的颜色抖动) */
+.portal-gate:hover .main-text {
+    animation: glitch-color 0.3s infinite;
+}
+
+@keyframes glitch-color {
+    0% { color: var(--text-color); }
+    50% { color: var(--accent-pink); }
+    100% { color: var(--accent-green); }
+}
+
+/* 点击时：瞬间收缩 */
+.portal-gate:active {
+    transform: scale(0.9);
 }
