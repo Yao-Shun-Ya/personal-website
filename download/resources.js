@@ -7,10 +7,10 @@
 // 1. ⭐ 分类配置 (在这里管理你的按钮)
 const categoryConfig = [
     { type: 'all',      name: '全部' },       // 第一个必须是全部
-    { type: 'fc', name: '翻唱下载' },
-    { type: 'qt',     name: '稀奇古怪' },
-    { type: 'project',  name: '混音机架' },
-    { type: 'back', name: '翻唱的伴奏' },
+    { type: 'fc', name: '已发布作品' },
+    { type: 'qt',     name: '未发布作品' },
+    { type: 'qg',  name: '稀奇古怪的文件' },
+    { type: 'fl', name: '呜呜，免费的付费内容（福利？）' },
     // 💡 你可以在这里随时添加新分类，比如：
     // { type: 'video', name: '视频素材' },
 ];
@@ -239,8 +239,186 @@ const resources = [
         size: "WAV | 30.8MB",
         link: "/download/资源仓库文件/听夜雨remix和翻唱/听夜雨.wav"
     },
-
-    
+    {
+        id: 23,
+        title: "网站源文件",
+        type: "qg",
+        date: "2025-11-30",
+        desc: "开箱即用，什么都不需要下\n\n全部代码基于自带的基础前端语言编写",
+        cover: "/download/资源仓库文件/11aa文件/1-1.png",
+        size: "RAR | 15.4MB",
+        link: "/download/资源仓库文件/11aa文件/website.rar"
+    },
+    {
+        id: 24,
+        title: "翻唱的《搬家前，短暂夜》",
+        type: "qt",
+        date: "2024-11-25",
+        desc: "大一上的时候刚刚接触混音，然后参加学校的校园歌手类型的比赛唱的这首歌，发挥的很不好很不好！！！\n还好没给我道心干碎呜呜\n\n这个应该是我第一首认真混录的歌啦，真的真的很早期，听感爆炸见谅",
+        cover: "/download/资源仓库文件/搬家前短暂夜/1.jpg",
+        size: "WAV | 77.8MB",
+        link: "/download/资源仓库文件/搬家前短暂夜/搬家前短暂夜.wav"
+    },
+    {
+        id: 25,
+        title: "人生中第一次翻唱---《Overthink》",
+        type: "qt",
+        date: "2021-7-31",
+        desc: "人生中第一次用daw软件，这次录歌好像是因为当时的学而思线上补习班每节课结束之后，有一两个同学表演才艺的机会，大概是羡慕大家有才艺，也是羡慕别人展示敢于自己闪闪发光的样子，正巧当时时光代理人正火，我也挺喜欢看啦，就选了最喜欢的片尾曲进行翻唱，好青涩但是我自认为也还蛮好听的啦，是很美好的回忆\n\n这时候还是用的一台15年的Macbook，所以顺理成章的用上了logic pro，但是录音这时候是直接用的macbook自带的麦克风，人声音质堪忧\n\n初次接触录音软件，只觉得logic的UI真的好漂亮，真的是操作非常符合直觉的一个很好的宿主软件\n\n这也算得上我梦开始的地方啦",
+        cover: "/download/资源仓库文件/Overthink/1.jpg",
+        size: "MP3 | 5.53MB",
+        link: "/download/资源仓库文件/Overthink/overthink.mp3"
+    },    
+    {
+        id: 26,
+        title: "也是很青涩的翻唱《One Last Kiss》",
+        type: "qt",
+        date: "2023-4-22",
+        desc: "（这首歌是拿macbook的自带麦直接录的来着，渣音质）\n\n高中的时候，学校音乐办公室举行的校园歌手大赛，我海选唱的这个，挺扯淡的，居然没过\n\n只觉得合着评委除了中文其他语言都听不懂，初赛一个外语歌都没过；没过就算了，为什么那个阴间的《你的歌声里》过了......（唱的真的超难听.....真的真的不是诋毁）再怎么不堪我也比那个好的多吧",
+        cover: "/download/资源仓库文件/one last kiss/1.jpg",
+        size: "MP3 | 9.66MB",
+        link: "/download/资源仓库文件/one last kiss/one last kiss.mp3"
+    },   
+    {
+        id: 27,
+        title: "翻唱的《不眠之夜》",
+        type: "fc",
+        date: "2024-3-10",
+        desc: "当时是刚考完成都的二诊，直接难飞了，有一点道心破碎，直接真的变成不眠之夜了\n\n这也是我b站上发的第一个作品呀~~",
+        cover: "/download/资源仓库文件/不眠之夜/1.jpg",
+        size: "M4A | 4.3MB",
+        link: "/download/资源仓库文件/不眠之夜/不眠之夜.m4a"
+    },   
+    {
+        id: 28,
+        title: "黑历史翻唱《novocaine》",
+        type: "qt",
+        date: "2024-3-16",
+        desc: "当时是看<a href='https://space.bilibili.com/2650919' target='_blank'>凛老师</a>的<a href='https://www.bilibili.com/video/BV1Ww411t7hC' target='_blank'>视频</a>发现，哇！真的好好听，遂菜菜的自己也试了试\n\n普鲁卡因（novocaine）为酯类局麻药，能暂时阻断神经纤维的传导而具有麻醉作用，其盐酸盐的结合形式在组织中释放出游离碱而发挥局部麻醉作用。\n\n盐酸普鲁卡因片：用于缓解神经衰弱、神经衰弱综合征及植物神经功能紊乱的症状。\n\n盐酸普鲁卡因注射液：适用于浸润麻醉、阻滞麻醉、腰椎麻醉、硬膜外麻醉及封闭疗法等。",
+        cover: "/download/资源仓库文件/novocaine/1.jpg",
+        size: "MP3 | 7.52MB",
+        link: "/download/资源仓库文件/novocaine/novocaine.mp3"
+    },   
+    {
+        id: 29,
+        title: "古早翻唱《会魔法的老人》",
+        type: "qt",
+        date: "2023-8-07",
+        desc: "看一个手书听到的，蛮对我胃口的说唱歌曲啦，虽然我翻的不怎么样呜呜",
+        cover: "/download/资源仓库文件/会魔法的老人/1.jpg",
+        size: "M4A | 5.15MB",
+        link: "/download/资源仓库文件/会魔法的老人/会魔法的老人.m4a"
+    },  
+    {
+        id: 30,
+        title: "在KTV要疯掉的《水星记》",
+        type: "qt",
+        date: "2023-8-6",
+        desc: "和高中同学去小包房唱KTV，快疯掉了嘻嘻，怎么又难听又好听的（）",
+        cover: "/download/资源仓库文件/水星记/1.jpg",
+        size: "MP3 | 4.94MB",
+        link: "/download/资源仓库文件/水星记/水星记.MP3"
+    },  
+    {
+        id: 31,
+        title: "一小段《blind to you》",
+        type: "qt",
+        date: "2025-1-26",
+        desc: "循环了好多遍，想翻唱整首，发现难度高的吓人.....\n\n有机会翻全曲吧~",
+        cover: "/download/资源仓库文件/blind to you/1.jpg",
+        size: "WAV | 46.5MB",
+        link: "/download/资源仓库文件/blind to you/blind to you.wav"
+    },  
+    {
+        id: 32,
+        title: "床上放情其一",
+        type: "fl",
+        date: "2025-11-27",
+        desc: "莫名其妙叽里咕噜什么呢，只听懂了娇喘",
+        cover: "/download/资源仓库文件/奇怪录音/1.JPG",
+        size: "WAV | 17.6MB",
+        link: "/download/资源仓库文件/奇怪录音/床上发情其一.wav"
+    },  
+    {
+        id: 33,
+        title: "床上放情其二",
+        type: "fl",
+        date: "2025-12-10",
+        desc: "床上面想小憩了呜呜，想亲亲呜呜，然后被舍友爬床袭击了....",
+        cover: "/download/资源仓库文件/奇怪录音/2.JPG",
+        size: "M4A | 1.92MB",
+        link: "/download/资源仓库文件/奇怪录音/床上发情其二.m4a"
+    },  
+    {
+        id: 34,
+        title: "被邪恶の蔡按摩（虐待）",
+        type: "fl",
+        date: "2025-7-8",
+        desc: "痛死啦！！！！！\n\n按摩不要按经好不好呜呜",
+        cover: "/download/资源仓库文件/奇怪录音/5.png",
+        size: "WAV | 46.2MB",
+        link: "/download/资源仓库文件/奇怪录音/被邪恶の蔡按摩（虐待）.wav"
+    },  
+    {
+        id: 35,
+        title: "应某个女孩子要求试着录的一段r18音声（好羞耻）",
+        type: "fl",
+        date: "2025-6-24",
+        desc: "呜呜，什么乱七八糟的",
+        cover: "/download/资源仓库文件/奇怪录音/4.png",
+        size: "WAV | 11.2MB",
+        link: "/download/资源仓库文件/奇怪录音/应某个女孩子要求试着录的一段音声（好羞耻）.wav"
+    },  
+    {
+        id: 36,
+        title: "被高中臭舍友在床上挠痒痒呜呜",
+        type: "fl",
+        date: "2024-3-27",
+        desc: "且听且珍惜\n\n真的真的只是被爬床挠痒痒，我好会叫呜呜，是涩涩天赋怪~\n原来这时候就已经有奇怪的倾向了吗\n\n声音太大还被宿管发现了，",
+        cover: "/download/资源仓库文件/奇怪录音/3.png",
+        size: "WAV | 13.2MB",
+        link: "/download/资源仓库文件/奇怪录音/被高中臭舍友在床上挠痒痒呜呜.wav"
+    },  
+    {
+        id: 37,
+        title: "【小登投稿】《听夜雨》重编曲and少年音翻唱，副歌部分有机会再打磨一下，医学生果然什么都会（",
+        type: "fc",
+        date: "2026-1-16",
+        desc: "放假啦！\n想蹭初投稿的热度\n但是不想转生成数字老师\n只好厚着脸皮打tag了嘻嘻\n\n这个其实是之前的库存来着（）\n\n我回来啦！",
+        cover: "/download/资源仓库文件/听夜雨remix和翻唱/听夜雨.jpg",
+        size: "WAV | 30.9MB",
+        link: "/download/资源仓库文件/听夜雨remix和翻唱/听夜雨ult.wav"
+    },  
+    {
+        id: 38,
+        title: "电台第一期先导—《原風景》纯享版，“比空中任何的星星都要闪亮，那是温柔满溢的街道灯光”",
+        type: "fc",
+        date: "2026-2-17",
+        desc: "快速到达第一期正片→<a href='https://www.bilibili.com/video/BV1PBZMBkE66' target='_blank'>【个人向电台】舜时听风-第一期 | 小狼的除夕夜，想陪着你一起度过。</a>\n\n除夕快乐~我回来啦！",
+        cover: "/download/资源仓库文件/原风景/1.png",
+        size: "WAV | 79.5MB",
+        link: "/download/资源仓库文件/原风景/原風景.wav"
+    },  
+    {
+        id: 39,
+        title: "《風結び/织风结》生日回翻唱，听到第一句能惊艳到你吗awa——“今朝梦醒与君别，遥盼清风寄相思”",
+        type: "fc",
+        date: "2026-3-17",
+        desc: "呜呜\n以后就不能叫善待一旬老人了\n要善待二旬老人哇\n祝我自己生日快乐\n\n要被给到阴阳师该有的热度了",
+        cover: "/download/资源仓库文件/织风结/1.jpg",
+        size: "WAV | 82.6MB",
+        link: "/download/资源仓库文件/织风结/织风结.wav"
+    },  
+    {
+        id: 40,
+        title: "【新人投稿】《反乌托邦Pt.2》人类翻唱，其实一点都不新",
+        type: "fc",
+        date: "2026-3-03",
+        desc: "怎么就上学了呜呜\n课好多\n有点死死的\n请善待一旬老人谢谢",
+        cover: "/download/资源仓库文件/反乌托邦/1.jpg",
+        size: "WAV | 49.9MB",
+        link: "/download/资源仓库文件/反乌托邦/反乌托邦Pt.2.wav"
+    },  
     
     // 👇 复制模板 👇
     // {
