@@ -66,23 +66,23 @@ function loadFeaturedVideos() {
     // 视频配置
     const myVideos = [
         {
-            title: "《A Seat For You》男声翻唱",
-            date: "2025/10/24",
-            img: "./Picture/投稿图片/asfy.jpg", 
-            link: "https://www.bilibili.com/video/BV1GNsWzeEon"
-        },
+            title: "《風結び》生日回翻唱，“今朝梦醒与君别，遥盼清风寄相思”",
+            date: "2026/03/17",
+            img: "./download/资源仓库文件/织风结/1.jpg",
+            link: "https://www.bilibili.com/video/BV1AnwRzLENW"
+        },        
         {
-            title: "你唱歌的时候真的！好可爱~ ",
-            date: "2025/10/08",
-            img: "./Picture/投稿图片/演.jpg",
-            link: "https://www.bilibili.com/video/BV1rCWxzpEPt"
-        },
+            title: "【新人投稿】《反乌托邦Pt.2》人类翻唱，其实一点都不新 ",
+            date: "2026/03/03",
+            img: "./download/资源仓库文件/反乌托邦/1.jpg",
+            link: "https://www.bilibili.com/video/BV1MkPJzcEd8"
+        },      
         {
-            title: "七夕特供BE翻唱《消散对白》",
-            date: "2025/8/29",
-            img: "./Picture/投稿图片/消散对白.jpg",
-            link: "https://www.bilibili.com/video/BV1ZwvAz3EqL"
-        }
+            title: "【电台】舜时听风-第一期 | 小狼的除夕夜，想陪着你一起度过。",
+            date: "2026/02/16",
+            img: "./download/资源仓库文件/原风景/1.png", 
+            link: "https://www.bilibili.com/video/BV1PBZMBkE66"
+        },
     ];
 
     myVideos.forEach((item, index) => {

@@ -35,10 +35,6 @@ const MUSIC_DATA = [
         src: "/download/资源仓库文件/台风看海/迎着台风去看海.wav" 
     },
     { 
-        title: "听夜雨", 
-        src: "/download/资源仓库文件/听夜雨remix和翻唱/听夜雨.wav" 
-    },
-    { 
         title: "ねぇねぇねぇ (呐呐呐)", 
         src: "/download/资源仓库文件/呐呐呐/ねぇねぇねぇ。 (呐呐呐。).wav" 
     },
@@ -61,10 +57,6 @@ const MUSIC_DATA = [
     { 
         title: "我的悲伤是水做的", 
         src: "/download/资源仓库文件/悲伤水/我的悲伤是水做的.wav" 
-    },
-    { 
-        title: "搬家前短暂夜", 
-        src: "/download/资源仓库文件/搬家前短暂夜/搬家前短暂夜.wav" 
     },
     { 
         title: "时光盲盒", 
@@ -97,6 +89,22 @@ const MUSIC_DATA = [
     { 
         title: "衡山路，宛平路", 
         src: "/download/资源仓库文件/衡山路宛平路/衡山路，宛平路.wav" 
+    },
+    { 
+        title: "听夜雨", 
+        src: "/download/资源仓库文件/听夜雨remix和翻唱/听夜雨ult.wav" 
+    },
+    { 
+        title: "原風景", 
+        src: "/download/资源仓库文件/原风景/原風景.wav" 
+    },
+    { 
+        title: "织风结", 
+        src: "/download/资源仓库文件/织风结/织风结.wav" 
+    },
+    { 
+        title: "反乌托邦Pt.2", 
+        src: "/download/资源仓库文件/反乌托邦/反乌托邦Pt.2.wav" 
     }
     // 👉 复制上面的花括号块，粘贴到这里加新歌...
     // 注意：最后一个花括号后面不要加逗号，虽然加了也没事

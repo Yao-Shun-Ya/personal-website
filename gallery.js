@@ -17,6 +17,7 @@ const galleryConfig = {
         { file: "8.jpg", text: "玩原（）" },
         { file: "9.jpg", text: "还是火影男（）" },
         { file: "10.png", text: "玩崩铁（）" },
+        { file: "11.jpg", text: "永远和宇齐在一起" },
     ]
 };
 
