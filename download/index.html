@@ -3,68 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>资源下载 | 爻舜</title>
-    
-    <link rel="icon" href="/Picture/头像.jpg" type="image/jpeg">
+    <title>资源小仓库 | 爻舜</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    
-    <link href="../style.css" rel="stylesheet"> 
-    <link href="style.css" rel="stylesheet">
+    <link rel="icon" href="../Picture/头像.jpg" type="image/jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Nunito:wght@500;700;800&family=Patrick+Hand&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 
     <script>
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
         })();
     </script>
-    <style>.preload * { transition: none !important; }</style>
+
+    <style>
+        .preload *,
+        .preload *::before,
+        .preload *::after {
+            transition: none !important;
+        }
+    </style>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../mobile.css">
 </head>
 
-<body class="preload"> 
-    <div class="overlay-backdrop"></div>
-    <header>
-        <div class="logo">🎶 爻舜 / Download</div>
-        <nav>
+<body class="preload">
+
+    <div class="ambient-backdrop" aria-hidden="true">
+        <span class="ambient-orb orb-1"></span>
+        <span class="ambient-orb orb-2"></span>
+        <span class="ambient-orb orb-3"></span>
+        <div class="ambient-aurora"></div>
+        <div class="cyber-grid-layer"></div>
+        <canvas id="bg-ambient-canvas"></canvas>
+    </div>
+
+    <div class="overlay-backdrop">
+        <canvas id="vault-particles" class="vault-particles" aria-hidden="true"></canvas>
+    </div>
+
+    <header id="vault-header">
+        <a href="../index.html" class="logo" aria-label="返回主页">
+            <span class="logo-badge" aria-hidden="true">📂</span>
+            <span class="logo-text">爻舜</span>
+            <span class="logo-tag">VAULT</span>
+        </a>
+
+        <nav aria-label="仓库导航">
             <ul>
-                <li><a href="/home">返回主页</a></li>
+                <li><a href="../index.html" class="nav-link active">← 返回主页</a></li>
             </ul>
         </nav>
-        
-        <button id="theme-toggle" class="theme-btn" aria-label="切换黑夜模式">
-            <span class="icon-wrapper sun">☀️</span>
-            <span class="icon-wrapper moon">🌙</span>
+
+        <button id="theme-toggle" class="theme-btn" aria-label="切换白天/黑夜主题" title="切换马卡龙白昼 / 赛博霓虹夜">
+            <span class="icon-wrapper sun" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4.2"></circle>
+                    <path d="M12 2.5v2.2M12 19.3v2.2M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2.5 12h2.2M19.3 12h2.2M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path>
+                </svg>
+            </span>
+            <span class="icon-wrapper moon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </span>
         </button>
     </header>
 
-    <section class="download-container">
-        <h1 class="page-title">📂 资源小仓库</h1>
-        
-        <div class="filter-bar">
-            <div class="category-group" id="category-group"></div>
-            
-            <div class="sort-switch" id="sort-switch" data-val="newest">
-                <div class="switch-slider"></div>
-                
-                <div class="switch-opt active" data-type="newest">📅 新到旧</div>
-                <div class="switch-opt" data-type="oldest">📅 旧到新</div>
+    <main class="download-container">
+        <section class="vault-hero">
+            <div class="section-header" style="margin-bottom: 10px;">
+                <span class="section-kicker">DATA ARCHIVE</span>
+                <h1 class="section-title">📂 资源小仓库</h1>
             </div>
+            <div class="vault-stats" id="vault-stats">正在读取资源...</div>
+        </section>
+
+        <section class="filter-panel" aria-label="资源筛选与搜索">
+            <div class="filter-top-row">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="search" id="resource-search" class="search-input" placeholder="搜索歌名、日期、简介或格式 (如 WAV / FLAC)..." aria-label="搜索资源" autocomplete="off">
+                </div>
+
+                <div class="sort-switch" id="sort-switch" data-val="newest" role="button" tabindex="0" aria-label="切换排序方式">
+                    <div class="switch-slider"></div>
+                    <div class="switch-opt active" data-type="newest">📅 新到旧</div>
+                    <div class="switch-opt" data-type="oldest">📅 旧到新</div>
+                </div>
+            </div>
+
+            <div class="category-group" id="category-group"></div>
+        </section>
+
+        <section class="resource-grid" id="resource-grid"></section>
+
+        <div class="back-link-wrap">
+            <a href="../index.html" class="back-link">← 回到主页</a>
         </div>
-
-        <div class="resource-grid" id="resource-grid"></div>
-
-        <a href="/home" class="back-link">← 回到主页</a>
-    </section>
+    </main>
 
     <footer>
-        <p>Designed with <span class="heart">♥</span> for 爻舜</p>
-        <p>联系邮箱: 2720356281@qq.com</p>
-        <p><br>此网站本人已开源</p>
-        <p>github：<a href="https://github.com/Yao-Shun-Ya/personal-website" target="_blank">https://github.com/Yao-Shun-Ya/personal-website（可点击跳转）</a></p>
-        <p><br><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2025173793号</a></p>
+        <div class="footer-card">
+            <p class="footer-brand">Designed with <span class="heart">♥</span> for <strong>爻舜</strong></p>
+            <div class="footer-links">
+                <a class="footer-pill" href="mailto:2720356281@qq.com">📧 2720356281@qq.com</a>
+                <a class="footer-pill" href="https://github.com/Yao-Shun-Ya/personal-website" target="_blank" rel="noopener noreferrer">💻 GitHub 开源仓库</a>
+            </div>
+            <p class="footer-meta">
+                此网站本人已开源 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2025173793号</a>
+            </p>
+        </div>
     </footer>
+
+    <div id="site-toast" class="site-toast" role="status" aria-live="polite"></div>
 
     <script src="resources.js"></script>
     <script src="script.js"></script>

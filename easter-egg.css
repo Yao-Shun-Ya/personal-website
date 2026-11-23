@@ -1,63 +1,72 @@
-/* =========================================
-   🥚 彩蛋特效样式 (easter-egg.css - 完美衔接版)
-   ========================================= */
+/* =========================================================
+   ✨ 惊艳全屏彩蛋：KōShun 秘密星海音乐盒 (easter-egg.css)
+   ========================================================= */
 
-/* 1. 🌀 头像爆发动画 (无缝衔接版) */
-/* 核心逻辑：整个动画过程都保持在 15deg 左右摆动，绝不回正 */
 @keyframes avatar-pop {
-    0% { 
-        /* 承接 :active 状态 (压扁 + 歪头) */
-        transform: scale(0.95) rotate(15deg); 
-    }
-    30% { 
-        /* 猛烈弹开！撑大到 1.25倍，稍微往回转一点增加动感 */
-        transform: scale(1.25) rotate(10deg); 
-    }
-    50% { 
-        /* 回缩 */
-        transform: scale(0.95) rotate(18deg); 
-    }
-    70% { 
-        /* 小幅回弹 */
-        transform: scale(1.05) rotate(14deg); 
-    }
-    100% { 
-        /* 最终回到 :hover 状态 (1.1倍 + 15度) */
-        /* 这样动画结束时，刚好和鼠标悬停状态重合，无缝连接 */
-        transform: scale(1.1) rotate(15deg); 
-    }
+    0%   { transform: scale(0.92) rotate(15deg); }
+    30%  { transform: scale(1.26) rotate(9deg); }
+    50%  { transform: scale(0.95) rotate(18deg); }
+    72%  { transform: scale(1.07) rotate(13deg); }
+    100% { transform: scale(1.1) rotate(15deg); }
 }
 
 .avatar.popping {
-    animation: avatar-pop 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: avatar-pop 0.56s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* 2. 纸屑粒子 */
-.confetti-particle {
+/* 连击充能浮标（点击 1~4 次即时反馈） */
+.avatar-combo-toast {
     position: fixed;
-    width: 10px;
-    height: 10px;
-    background-color: var(--accent-green);
-    z-index: 9999;
+    z-index: 10020;
     pointer-events: none;
-    border-radius: 50%;
-    opacity: 0;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #F28BA8, #B69CF5);
+    box-shadow: 0 8px 20px rgba(217, 91, 130, 0.36);
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
 }
 
-/* 3. 彩蛋弹窗遮罩 */
+[data-theme="dark"] .avatar-combo-toast {
+    background: linear-gradient(135deg, #FF2E93, #00F0FF);
+    color: #06101F;
+    box-shadow: 0 0 22px rgba(0, 240, 255, 0.6);
+}
+
+/* 全屏星海烟花画布 */
+#easter-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10001;
+    pointer-events: none;
+}
+
+.easter-modal-backdrop.active #easter-canvas {
+    pointer-events: auto;
+    cursor: crosshair;
+}
+
+/* 彩蛋沉浸遮罩 */
 .easter-modal-backdrop {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    inset: 0;
+    background: radial-gradient(circle at 50% 42%, rgba(46, 26, 56, 0.72), rgba(14, 10, 24, 0.88));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     z-index: 10000;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.45s ease;
+    perspective: 1100px;
 }
 
 .easter-modal-backdrop.active {
@@ -65,82 +74,195 @@
     pointer-events: auto;
 }
 
-/* 4. 彩蛋卡片本体 */
+/* 3D 全息典藏纪念票卡片 */
 .easter-card {
-    background: var(--card-bg);
-    padding: 40px;
-    border-radius: 30px;
-    text-align: center;
-    border: 4px solid var(--accent-pink);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    max-width: 90%;
-    width: 400px;
-    transform: scale(0.5) translateY(100px);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: relative;
+    z-index: 10005;
+    width: min(90vw, 450px);
+    padding: 40px 34px 32px;
+    border-radius: 32px;
+    text-align: center;
+    background: linear-gradient(145deg, rgba(255, 252, 248, 0.94), rgba(255, 236, 244, 0.90));
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(242, 139, 168, 0.4),
+        0 0 50px rgba(242, 139, 168, 0.38);
+    transform: scale(0.55) translateY(70px) rotateX(18deg);
+    opacity: 0;
+    transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.45s ease;
+    transform-style: preserve-3d;
     overflow: hidden;
 }
 
+[data-theme="dark"] .easter-card {
+    background: linear-gradient(145deg, rgba(16, 22, 46, 0.92), rgba(32, 16, 50, 0.90));
+    border-color: rgba(0, 240, 255, 0.65);
+    box-shadow:
+        0 32px 100px rgba(0, 0, 0, 0.78),
+        0 0 42px rgba(0, 240, 255, 0.38),
+        0 0 76px rgba(255, 46, 147, 0.28);
+}
+
 .easter-modal-backdrop.active .easter-card {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) rotateX(0deg);
     opacity: 1;
 }
 
-/* 装饰元素 */
-.easter-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    animation: jelly-bounce 2s infinite; 
+/* 全息镭射反光层 */
+.easter-holo-foil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        125deg,
+        transparent 18%,
+        rgba(255, 255, 255, 0.42) 34%,
+        rgba(242, 139, 168, 0.24) 48%,
+        rgba(105, 201, 182, 0.24) 62%,
+        transparent 80%
+    );
+    background-size: 220% 220%;
+    animation: holo-sweep 4.5s ease-in-out infinite alternate;
+    mix-blend-mode: overlay;
+}
+
+@keyframes holo-sweep {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+.easter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    background: var(--accent-pink-soft);
+    color: var(--accent-pink-strong);
+    margin-bottom: 18px;
+}
+
+[data-theme="dark"] .easter-badge {
+    background: rgba(0, 240, 255, 0.14);
+    color: var(--accent-green);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.easter-gif-stage {
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.easter-gif {
+    width: min(190px, 58vw);
+    height: auto;
+    display: block;
 }
 
 .easter-card h2 {
-    font-size: 2rem;
+    font-size: 1.95rem;
     color: var(--text-color);
-    margin-bottom: 15px;
-    font-family: 'ZCOOL KuaiLe', cursive;
+    margin-bottom: 10px;
+    font-family: var(--font-display);
 }
 
 .highlight-text {
-    font-size: 1.5rem;
-    color: var(--accent-pink);
+    font-size: 1.48rem;
+    color: var(--accent-pink-strong);
     font-weight: bold;
-    margin-bottom: 10px;
-    font-family: 'Foxi', cursive; 
+    margin-bottom: 8px;
+    font-family: var(--font-hand);
 }
 
-.sub-text {
-    color: #888;
-    font-size: 1rem;
+[data-theme="dark"] .highlight-text {
+    color: var(--accent-pink);
+    text-shadow: 0 0 16px rgba(255, 46, 147, 0.65);
 }
 
-/* 关闭按钮 */
+.easter-card .sub-text {
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    margin-bottom: 22px;
+}
+
+.easter-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.easter-action-btn {
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--accent-pink);
+    background: var(--card-bg-solid);
+    color: var(--accent-pink-strong);
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.easter-action-btn:hover {
+    background: var(--accent-pink-strong);
+    color: #FFFFFF;
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 22px rgba(217, 91, 130, 0.34);
+}
+
+[data-theme="dark"] .easter-action-btn {
+    background: rgba(0, 240, 255, 0.12);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+[data-theme="dark"] .easter-action-btn:hover {
+    background: var(--accent-green);
+    color: #07101F;
+    box-shadow: 0 0 22px rgba(0, 240, 255, 0.55);
+}
+
+.easter-tip {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    opacity: 0.82;
+}
+
 .easter-close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0,0,0,0.05);
+    top: 14px;
+    right: 14px;
+    background: rgba(128, 128, 128, 0.14);
     border: none;
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    font-size: 1.5rem;
+    font-size: 1.45rem;
+    line-height: 1;
     color: var(--text-color);
     cursor: pointer;
-    transition: 0.3s;
+    z-index: 10;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
 
 .easter-close-btn:hover {
-    background: var(--accent-pink);
-    color: white;
+    background: var(--accent-pink-strong);
+    color: #FFFFFF;
     transform: rotate(90deg);
 }
 
-/* 移动端适配 */
 @media screen and (max-width: 768px) {
     .easter-card {
-        padding: 30px 20px;
-        width: 85%;
+        padding: 32px 20px 26px;
     }
-    .highlight-text { font-size: 1.3rem; }
+    .easter-card h2 { font-size: 1.65rem; }
+    .highlight-text { font-size: 1.28rem; }
 }

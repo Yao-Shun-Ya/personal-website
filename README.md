@@ -8,218 +8,328 @@
 ![Vibe](https://img.shields.io/badge/Vibe-Warm%20%26%20Healing-pink?style=for-the-badge)
 
 <p align="center">
-  <a href="#-核心亮点-features">核心亮点</a> •
-  <a href="#-技术栈-tech-stack">技术栈</a> •
-  <a href="#-目录结构-structure">目录结构</a> •
-  <a href="#-食用指南-getting-started">食用指南</a> •
-  <a href="#-部署运维-deployment">部署运维</a>
+  <a href="#-项目简介">项目简介</a> •
+  <a href="#-页面结构">页面结构</a> •
+  <a href="#-核心功能">核心功能</a> •
+  <a href="#-目录结构">目录结构</a> •
+  <a href="#-本地运行">本地运行</a> •
+  <a href="#-部署">部署</a>
 </p>
 
 </div>
 
-> ✨ **"用声音记录生活，用代码（虽然是现学的）记录发癫。"**
+> ✨ **"用声音记录生活，用代码记录发癫。"**
 >
-> 这里是 **爻舜 (Kō Shun)** 的数字后花园。作为一个主修医学、副业唱见、偶尔客串前端开发的 06 年 INFP，我把热爱、碎碎念、"奇怪切片"以及**熬夜掉的头发**都塞进了这个网页里。
+> 这里是 **爻舜 (Kō Shun)** 的数字后花园。主修医学、副业唱见、偶尔客串前端开发的 06 年 INFP，把热爱、碎碎念、"奇怪切片"和熬夜掉的头发都塞进了这个网页里。
 
 ---
 
-## 📖 项目简介 (Introduction)
+## 📖 项目简介
 
-本项目是一个**纯静态、无依赖、高性能**的个人作品集网站（含独立资源子站）。
+这是一个**纯静态、无构建、无框架依赖**的个人作品集网站，包含一个独立的资源下载子站。
 
-在这个 React/Vue 满天飞的时代，本项目坚持“返璞归真”，完全使用原生 **HTML5, CSS3, JavaScript (ES6+)** 编写。这不仅是为了追求极致的加载速度（毕竟服务器只有 2 核 2G），更是为了证明：**只要脑洞够大，原生 JS 也能搓出 3A 级的交互动效。**
+整个项目只使用原生 **HTML5 + CSS3 + JavaScript (ES6+)**，没有 `npm install`，没有打包步骤。视觉上追求"白天温暖奶油 + 夜晚赛博霓虹"，交互上尽量做到每一个按钮、每一次拖拽、每一个弹窗都有完整的动效反馈。
 
----
+当前内容规模：
 
-## ⚡ 核心亮点 (Features)
-
-这里是给面试官或者技术宅看的，证明我不是只会写 `console.log`。
-
-### 1. 🎵 磁吸式悬浮播放器 (Magnetic Music Player)
-一个完全手搓的全局音频组件，拒绝套用现成插件。
-* **磁吸交互 (Magnetic Effect)**：利用向量计算鼠标位置，实现“靠近即吸附、远离即回弹”的物理手感。
-* **拟物化旋钮 (Physics Knob)**：音量调节采用旋转交互，阻尼感适中，且带有动态光晕反馈。
-* **移动端小组件化**：在手机上自动形变为类似 iOS Widget 的小方块，操作直观。
-* **防呆设计**：拖拽与点击互斥逻辑，防止误触。
-
-### 2. 📂 资源小仓库 (The Resource Sub-site)
-一个功能完备的资源下载子站 (`/download`)，实现了 SPA (单页应用) 级的体验。
-* **FLIP 英雄转场 (Hero Transition)**：点击卡片时，通过计算坐标差 (`getBoundingClientRect`)，从原位置**平滑飞跃**至屏幕中心展开，关闭时又能**无缝归位**，拒绝生硬的弹窗。
-* **RGB 流光边框**：展开后的卡片带有**赛博朋克风格的旋转流光**，白天是莫兰迪极光色，晚上是高亮霓虹色。
-* **DOM 安全打字机**：重构了打字机逻辑，采用“先渲染后揭晓”策略，完美支持富文本（链接可点击），杜绝 HTML 结构崩坏。
-* **多维筛选**：支持按分类过滤以及滑动式的时间排序。
-
-### 3. 🌌 物理惯性无限画廊 (Physics-based Gallery)
-位于主页的相册组件，手感极其丝滑。
-* **双向预加载 (Double-ended Buffering)**：渲染时将数据克隆并预留了 **双向 Buffer**。无论你怎么暴力拖拽，永远滑不到尽头，彻底消除白边。
-* **自研物理引擎**：实现了完整的触摸/鼠标手势监听，计算瞬时速度并引入**动量因子 (Momentum Factor)**，模拟真实世界的摩擦力与惯性。
-
-### 4. 🌓 极致黑夜模式 (Ultimate Dark Mode)
-* **防闪烁机制 (Anti-Flicker)**：通过 `<head>` 里的预加载脚本，在 DOM 渲染前锁定主题，彻底解决了刷新页面时“白屏一闪而过”的通病。
-* **果冻开关**：切换按钮实现了一个基于 `@keyframes` 的 **果冻弹跳 (Jelly Bounce)** 动画。
-* **全站适配**：从文字颜色到 RGB 边框流光，甚至遮罩层的模糊度，全部自动适配深色模式。
-
-### 5. 🥚 隐藏彩蛋 (Easter Eggs)
-* **超级果冻头像**：点击头像会有极强的果冻挤压感（Scale + Rotate 联动）。
-* **连击触发**：偷偷告诉你，连续点击头像 **5次**，屏幕会炸开五颜六色的纸屑（Confetti），并弹出一个写给你的感谢卡片。
+- 主站：首页 / 仓库 / 关于 / 最新投稿 / 属性五个区块
+- 播放器：约 40 首歌曲，支持歌名溢出滚动
+- 资源仓库：约 55 份资源，数量由 `resources.js` 动态计算
+- 相册：11 张 WebP 图片，双份渲染实现无限循环
 
 ---
 
-## 🛠️ 技术栈 (Tech Stack)
+## 🗺️ 页面结构
 
-主打一个“手搓”，拒绝臃肿的 `node_modules`。
+导航和页面区块顺序保持一致：
 
-* **核心**：Semantic HTML5, CSS3 Variables, Vanilla JavaScript (ES6+)
-* **布局**：Flexbox, CSS Grid (响应式网格), CSS Scrollbar Gutter
-* **动画**：CSS Transitions (贝塞尔曲线调教), Keyframes, FLIP Technique, Canvas (粒子特效)
-* **字体**：`Nunito`, `ZCOOL KuaiLe`, 以及手写风格的 `演示佛系体`。
+1. **首页** `#home`：头像、状态胶囊、三个入口按钮、霓虹灯牌
+2. **仓库** `#warehouse`：3D 次元星门，点击进入资源下载子站
+3. **关于** `#about`：Bento 卡片式个人介绍、硬件、DAW、技能、项目
+4. **最新投稿** `#portfolio`：三张最新 B 站视频卡片
+5. **属性** `#gallery`：可拖拽、可点击放大的无限相册
+
+资源子站入口：
+
+- 主站按钮：`/download`
+- 仓库星门：`#portal-gate`，点击后播放跃迁闪光再跳转
 
 ---
 
-## 📂 目录结构 (Structure)
+## ⚡ 核心功能
 
-模块化设计，主站、子站、播放器逻辑完全分离，互不干扰。
+### 1. 首页氛围与视觉
+
+- **双主题**：白天是米色点阵纸 + 马卡龙色，夜晚切换为赛博霓虹。主题在 `<head>` 里预加载，避免刷新时白屏闪烁。
+- **背景微粒画布**：`#bg-ambient-canvas` 绘制缓慢漂浮的光斑，鼠标靠近时有轻微推力；开启"减少动态效果"时自动不启动。
+- **3D 次元星门**：`#portal-canvas` 绘制 64 个旋转粒子，悬停时加速，点击时触发全屏跃迁闪光后进入 `/download`。
+- **滚动体验**：导航栏滚动高亮、区块 IntersectionObserver 入场、Bento 卡片光标追光。
+
+### 2. 悬浮黑胶播放器
+
+- **黑胶唱机造型**：唱片、唱臂、12 段频谱、SVG 弧形音量环。
+- **磁吸 + 拖拽**：桌面端播放器会轻微跟随鼠标；拖拽时限制在视口内，窗口缩放会自动拉回可视区域。
+- **歌名滚动**：歌名超出显示宽度时，自动复制一份做无缝跑马灯，速度按文字长度计算；切歌、展开播放器、窗口缩放都会重新判断。
+- **循环模式**：列表循环 / 单曲循环。
+- **移动端形态**：默认收起为右下角胶囊；展开后是 200px 左右、接近 1:1 的小盒子，不再铺满屏幕。
+- **音频按需加载**：`preload="none"`，点播放前不会预下载整首无损音频。
+
+### 3. 最新投稿
+
+- 在 `script.js` 的 `myVideos` 中手动配置标题、日期、封面、B 站链接。
+- 桌面端悬停有 3D 倾角、随机歪头和全屏聚焦遮罩。
+- 封面使用资源仓库里的 WebP 图片，卡片本身懒加载。
+
+### 4. 关于我
+
+- Bento 网格卡片：个人简介、硬件装备、DAW 与插件、技能、正在做的项目。
+- 项目列表下方有一行签名式彩蛋文案："—— 前面的区域以后再来探索吧...."。
+- 每个卡片支持光标追光，鼠标移动时有柔和的局部光感。
+
+### 5. 无限相册
+
+- 图片数据在 `gallery.js` 的 `galleryConfig` 中配置，当前全部为 WebP。
+- 渲染时把数据复制两份，并向轨道前后各移动 6 个节点，形成视觉上的无限循环。
+- 支持鼠标/触摸拖拽、惯性甩动、左右按钮、点击放大。
+- 放大后的详情层支持点击空白处或按 `Esc` 关闭，图片项支持键盘 `Enter` / 空格打开。
+
+### 6. 彩蛋
+
+- 连续点击头像 **5 次**触发。
+- 前 4 次有连击提示、迷你火花和 Web Audio 八音盒音符。
+- 第 5 次打开全屏星海舞台：
+  - Canvas 烟花与音符粒子
+  - 点击夜空可继续发射烟花
+  - Web Audio 实时合成八音盒旋律
+  - 中间展示 `Picture/gai.gif`（不旋转、无额外光晕）
+  - 支持关闭按钮和 `Esc`
+
+### 7. 资源小仓库
+
+资源页是一个独立的 `/download/` 子站，核心逻辑在 `download/script.js`。
+
+- **搜索**：按标题、日期、简介、文件格式实时过滤。
+- **分类**：全部 / 已发布作品 / 未发布作品 / 稀奇古怪的文件 / 福利内容，按钮上带动态数量。
+- **排序**：新到旧 / 旧到新。
+- **统计**：`共收录 X 份声音与数据碎片`，其中 X 来自 `resources.length`，增删资源后自动变化。
+- **FLIP 展开**：点击卡片后从原位置平滑飞到屏幕中心，关闭时回到卡片位置。
+- **流光边框**：旋转 conic-gradient + 白色扫光 + 外层模糊光晕；光晕只做色相流动，不会出现"大矩形在转"。
+- **背景粒子**：卡片展开时在模糊遮罩层里运行螺旋粒子和漂浮尘埃，关闭立即停止。
+- **底部下载按钮**：固定在详情卡片底部，简介在内部滚动，滚动条隐藏；按钮上方有渐隐层，长文案不会把按钮顶走。
+- **打字机简介**：先渲染 HTML 再逐字揭晓，保留简介中的可点击链接；开启"减少动态效果"时直接显示全文。
+- **键盘支持**：卡片 `Enter` / 空格打开，`Esc` 关闭。
+
+---
+
+## 🛠️ 技术栈
+
+- **核心**：Semantic HTML5、CSS3 Variables、Vanilla JavaScript (ES6+)
+- **布局**：Flexbox、CSS Grid、`clamp()`、`aspect-ratio`
+- **动画**：CSS Transitions、Keyframes、FLIP、Canvas 2D、Web Audio API
+- **字体**：`Nunito`、`ZCOOL KuaiLe`、`Patrick Hand`、本地 `演示佛系体`
+- **图片**：WebP（资源封面、相册），JPG（头像），GIF（彩蛋）
+- **无依赖**：没有框架、没有构建工具、没有 `node_modules`
+
+---
+
+## 📂 目录结构
 
 ```text
-personal-website/
-├── index.html             # 🏠 主站入口
-├── style.css              # 全局核心样式 & 黑夜模式变量
-├── mobile.css             # 移动端专用适配样式
-├── script.js              # 主站逻辑 (视频加载、交互特效)
+website/
+├── index.html                 # 主站入口
+├── style.css                  # 主站全局样式、主题变量、首页/关于/仓库/相册布局
+├── mobile.css                 # 主站移动端适配（导航、按钮、卡片、区块）
+├── script.js                  # 主站逻辑：视频、星门、滚动、主题、复制邮箱
 │
-├── player.js              # 🎵 播放器核心逻辑 (磁吸、拖拽)
-├── player.css             # 播放器样式 (旋钮、列表)
-├── songs.js               # 🎵 歌单配置文件
+├── player.js                  # 播放器逻辑：播放、切歌、拖拽、音量、歌名滚动
+├── player.css                 # 播放器样式：黑胶、频谱、旋钮、折叠胶囊
+├── songs.js                   # 歌单配置（title + src）
 │
-├── gallery.css            # 无限相册专用样式
-├── gallery.js             # 无限相册核心逻辑 (物理惯性、Buffer算法)
+├── gallery.js                 # 相册逻辑：无限循环、拖拽惯性、灯箱
+├── gallery.css                # 相册样式
 │
-├── easter-egg.css         # 🥚 彩蛋专用样式
-├── easter-egg.js          # 🥚 彩蛋逻辑 (点击计数、粒子爆炸)
+├── easter-egg.js              # 彩蛋逻辑：连击、烟花、Web Audio、GIF 卡片
+├── easter-egg.css             # 彩蛋样式
 │
-├── download/              # 📂 资源下载子站 (独立SPA风格)
-│   ├── index.html         # 下载页入口
-│   ├── style.css          # 下载页样式 (卡片网格、RGB边框、FLIP动画)
-│   ├── script.js          # 下载页逻辑 (排序、筛选、打字机)
-│   ├── resources.js       # 💾 资源数据库 (JSON配置)
-│   └── 资源仓库文件/       # 存放实际文件 (MP3/Zip等)
+├── README.md                  # 本文件
 │
-├── Font/                  # 字体文件
-└── Picture/               # 静态资源库
+├── Font/
+│   └── 演示佛系体.ttf          # 手写风格字体（体积较大，建议后续子集化/woff2）
+│
+├── Picture/
+│   ├── 头像.jpg
+│   ├── gai.gif                # 彩蛋 GIF
+│   └── Endless Gallery/       # 相册图片（1.webp ~ 11.webp）
+│
+└── download/                  # 资源下载子站
+    ├── index.html             # 下载页入口
+    ├── style.css              # 下载页样式：搜索、筛选、卡片、详情、流光、粒子
+    ├── script.js              # 下载页逻辑：搜索/筛选/排序、FLIP、详情、粒子
+    ├── resources.js           # 资源数据库 + 分类配置
+    └── 资源仓库文件/           # 实际资源文件
+        └── 作品名/
+            ├── 1.webp         # 封面
+            └── xxx.wav        # 音频/压缩包等
 ```
 
 ---
 
-## 🚀 食用指南 (Getting Started)
+## 🧩 数据与配置
 
-### 本地运行
-不需要 `npm`，不需要 `build`，开箱即用。
-1.  克隆仓库：
-    ```bash
-    git clone [https://github.com/Yao-Shun-Ya/personal-website.git](https://github.com/Yao-Shun-Ya/personal-website.git)
-    ```
-2.  双击 `index.html` 直接打开。
-3.  **Done.**
+### 添加歌曲
 
-*(推荐使用 VS Code 的 "Live Server" 插件运行，体验更佳。)*
+编辑 `songs.js`：
 
-### 自定义配置
-想改成你自己的？改这几个文件就够了：
+```js
+{
+    title: "歌名",
+    src: "./download/资源仓库文件/文件夹/音频.wav"
+}
+```
 
-1.  **修改视频**：`script.js` -> `loadFeaturedVideos` 函数。
-2.  **修改相册**：`gallery.js` -> `galleryConfig` 对象。
-3.  **添加下载资源**：`download/resources.js` -> 直接在数组里加 JSON 对象。
+播放器会自动随机打乱歌单，并在切歌时更新标题、跑马灯和播放列表高亮。
+
+### 添加资源
+
+编辑 `download/resources.js`：
+
+```js
+{
+    id: 56,
+    title: "资源标题",
+    type: "fc",                 // fc / qt / qg / fl
+    date: "2026-11-24",
+    desc: "简介，支持 <a href='...'>链接</a> 和 \n 换行",
+    cover: "./资源仓库文件/文件夹/1.webp",
+    size: "WAV | 50.0MB",
+    link: "./资源仓库文件/文件夹/音频.wav"
+}
+```
+
+分类配置在同一个文件的 `categoryConfig` 中，新增分类时同步添加 `type` 和显示名称即可。
+
+资源总数、分类数量、搜索命中数都会自动计算，不需要手动改页面上的数字。
+
+### 添加相册图片
+
+编辑 `gallery.js` 的 `galleryConfig`：
+
+```js
+{ file: "12.webp", text: "图片说明" }
+```
+
+图片放在 `Picture/Endless Gallery/` 下。
+
+### 修改最新投稿
+
+编辑 `script.js` 的 `myVideos`，填入标题、日期、封面路径和 B 站链接。
 
 ---
 
-## 🌐 部署运维 (Deployment)
+## 🚀 本地运行
 
-本项目完美支持 **Nginx** 部署。
+必须通过 HTTP 服务访问，不要直接双击 `index.html`。原因是站点里存在 `/download` 这类根路径链接，以及字体、音频、图片的相对路径，`file://` 下会失效。
 
-### Nginx 配置示例
-为了让 `/download` 子站和主站完美共存，且支持 HTTPS 跳转，推荐配置如下：
+在 `website/` 目录下执行：
 
-<details>
-<summary>点击展开 Nginx 配置代码</summary>
+```bash
+python -m http.server 8000
+```
+
+然后访问：
+
+```text
+http://localhost:8000/
+```
+
+也可以使用 VS Code 的 Live Server，但根目录要指向 `website/`。
+
+---
+
+## 🌐 部署
+
+推荐 Nginx，站点根目录指向 `website/`，确保 `/download` 子站可以正常访问：
 
 ```nginx
 server {
     listen 443 ssl http2;
     server_name yourdomain.com;
 
-    # SSL 配置...
     ssl_certificate /path/to/cert.pem;
     ssl_certificate_key /path/to/key.key;
 
-    # ✅ 核心：指向包含 index.html 和 download 文件夹的根目录
-    root /website; 
+    root /path/to/website;
     index index.html;
 
-    # 首页路由
     location / {
         try_files $uri $uri/ =404;
     }
 
-    # 下载页路由 (自动寻找 /website/download/index.html)
     location /download {
         try_files $uri $uri/ /download/index.html;
     }
 }
 ```
-</details>
+
+部署注意：
+
+- 站点使用 `/download` 绝对路径，建议部署在域名根目录。
+- 更新 CSS/JS 后浏览器可能缓存旧文件，测试时用 `Ctrl + F5` 强刷；生产环境可以给静态资源配置版本号或短缓存。
+- 音频文件较大，建议服务器开启 Range 请求，播放器才能按需加载。
+- 资源封面和相册已经使用 WebP，媒体文件可设置较长缓存。
 
 ---
 
-## 🎨 设计哲学 (Design Philosophy)
+## ⚙️ 性能与兼容性
 
-> **"Warmth in the Glitch"**
-
-* **视觉风格**：整体采用 **微拟物 (Neuomorphism)** 与 **波普艺术** 的结合。白天是温暖的米色点阵纸风格，夜晚则是赛博朋克的 RGB 霓虹风格。
-* **交互原则**：**"拒绝生硬"**。
-    * 每一个按钮点击都要有果冻般的回弹。
-    * 每一个弹窗关闭都要有“软着陆”的淡出。
-    * 每一次拖拽都要符合物理惯性。
-* **情感化设计**：配合俏皮的文案，打破互联网的冰冷感，还原一个真实的、鲜活的男大精神状态。
+- **图片**：资源封面和相册已转 WebP，封面长边限制 1600px。
+- **音频**：`preload="none"`，只有点击播放才加载当前歌曲。
+- **动效**：背景微粒尊重 `prefers-reduced-motion`；资源页粒子只在详情打开时运行。
+- **字体**：`演示佛系体.ttf` 约 15MB，使用 `font-display: swap` 避免阻塞文字；后续建议做字体子集化 + woff2。
+- **浏览器**：面向现代 Chrome / Edge / Safari / Firefox，依赖 WebP、Canvas、`backdrop-filter`、`aspect-ratio` 等特性。
 
 ---
 
-## 🚧 待办事项 (To-Do List)
+## 🚧 待办事项
 
-虽然现在已经很酷了，但我还有更多想法：
-- [ ] **集成网易云 API**：目前是手动链接，未来希望能做一个迷你的播放器条。
-- [ ] **更多彩蛋**：比如点击头像 10 次会触发一些奇怪的特效（正在构思中）。
-- [ ] **性能优化**：把现有的 JPG/PNG 全部转为 WebP 格式。
-- [ ] **3D 元素**：考虑引入 Three.js 做一个 3D 的音符背景（如果我不犯懒的话）。
-
----
-
-## 🤝 贡献 (Contributing)
-
-如果你发现了 Bug（比如相册甩太快飞出去了），或者有更好的脑洞：
-1.  Fork 本仓库。
-2.  新建分支 `git checkout -b feature/AmazingIdea`。
-3.  提交代码 `git commit -m 'Add some magic'`。
-4.  新建 Pull Request。
+- [x] 资源封面与相册图片转 WebP
+- [x] 资源数量、分类数量动态计算
+- [x] 移动端播放器收起胶囊 / 展开小盒子
+- [x] 播放器长歌名跑马灯
+- [x] 资源详情固定下载按钮 + 隐藏滚动条
+- [ ] `演示佛系体` 子集化并转 woff2
+- [ ] 给 WAV 资源增加流媒体压缩版本（可选）
+- [ ] 继续补充彩蛋与更多交互细节
 
 ---
 
-## 📜 许可证 (License)
+## 🤝 贡献
 
-本项目采用 **MIT License**。
-你可以随意修改、复制、商用，但请保留我的署名（毕竟代码也是我辛辛苦苦敲的呜呜）。
+如果发现 Bug（比如相册甩太快飞出去了），或者有更好的脑洞：
+
+1. Fork 本仓库
+2. 新建分支 `git checkout -b feature/AmazingIdea`
+3. 提交代码 `git commit -m 'Add some magic'`
+4. 新建 Pull Request
+
+---
+
+## 📜 许可证
+
+本项目采用 **MIT License**。你可以随意修改、复制、商用，但请保留署名。
 
 ---
 
 ## ❤️ 致谢
 
-* 感谢 **Gemini** 的倾力相助，果然好用。
-* 感谢 **我自己** 吃苦耐劳干到第二天早上六点半。
-* 感谢 **StackOverflow** 和 **MDN**，没有你们就没有这个网站。
+- 感谢 **Gemini** 以及一路帮忙调试的 AI 工具
+- 感谢 **StackOverflow** 和 **MDN**
+- 感谢每一个听过我唱歌、点进这个网站的人
 
 ---
 
 <p align="center">
   Made with <span style="color: #e25555;">&hearts;</span> and lots of ☕ by <b>爻舜 (Yao Shun)</b>
   <br>
-  <i>2025 · Sichuan, China</i>
+  <i>2026 · Sichuan, China</i>
 </p>

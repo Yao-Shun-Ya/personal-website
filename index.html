@@ -5,216 +5,471 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的奇奇怪怪个人页 | 爻舜</title>
-    
-    <link rel="icon" href="/Picture/头像.jpg" type="image/jpeg">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    
+
+    <link rel="icon" href="./Picture/头像.jpg" type="image/jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Nunito:wght@500;700;800&family=Patrick+Hand&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+
     <script>
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
         })();
     </script>
-    
+
     <style>
-        .preload * {
+        .preload *,
+        .preload *::before,
+        .preload *::after {
             transition: none !important;
             -webkit-transition: none !important;
         }
     </style>
 
-    <link rel="stylesheet" href="style.css">       
-    <link rel="stylesheet" href="gallery.css">     
-    <link rel="stylesheet" href="mobile.css">      
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="gallery.css">
     <link rel="stylesheet" href="easter-egg.css">
-    
     <link rel="stylesheet" href="player.css">
+    <link rel="stylesheet" href="mobile.css">
 </head>
 
 <body class="preload">
 
-    <div class="focus-overlay"></div>
+    <div class="ambient-backdrop" aria-hidden="true">
+        <span class="ambient-orb orb-1"></span>
+        <span class="ambient-orb orb-2"></span>
+        <span class="ambient-orb orb-3"></span>
+        <div class="ambient-aurora"></div>
+        <div class="cyber-grid-layer"></div>
+        <canvas id="bg-ambient-canvas"></canvas>
+    </div>
 
-    <header>
-        <div class="logo">🎶 爻舜</div>
-        <nav>
+    <div id="warp-flash" class="warp-flash" aria-hidden="true"></div>
+
+    <header id="site-header">
+        <a href="#home" class="logo" aria-label="回到首页">
+            <span class="logo-badge" aria-hidden="true">🎶</span>
+            <span class="logo-text">爻舜</span>
+            <span class="logo-tag">KōShun</span>
+        </a>
+
+        <nav aria-label="主导航">
             <ul>
-                <li><a href="#home">首页</a></li>
-                <li><a href="#portfolio">最新投稿</a></li>
-                <li><a href="#about">关于</a></li>
-                <li><a href="#gallery">属性</a></li>
-                <li><a href="#warehouse">仓库</a></li>
+                <li><a href="#home" class="nav-link active">首页</a></li>
+                <li><a href="#warehouse" class="nav-link">仓库</a></li>
+                <li><a href="#about" class="nav-link">关于</a></li>
+                <li><a href="#portfolio" class="nav-link">最新投稿</a></li>
+                <li><a href="#gallery" class="nav-link">属性</a></li>
             </ul>
         </nav>
-        
-        <button id="theme-toggle" class="theme-btn" aria-label="切换黑夜模式">
-            <span class="icon-wrapper sun">☀️</span>
-            <span class="icon-wrapper moon">🌙</span>
+
+        <button id="theme-toggle" class="theme-btn" aria-label="切换白天/黑夜主题" title="切换马卡龙白昼 / 赛博霓虹夜">
+            <span class="icon-wrapper sun" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4.2"></circle>
+                    <path d="M12 2.5v2.2M12 19.3v2.2M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2.5 12h2.2M19.3 12h2.2M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path>
+                </svg>
+            </span>
+            <span class="icon-wrapper moon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </span>
         </button>
     </header>
 
-    <section id="home" class="hero">
-        <img src="./Picture/头像.jpg" alt="我的头像" class="avatar">
-        <h1>你好呜，我是 爻舜 哇！</h1>
-        <p>✨ 一只怪唱见哇 | 可能是温暖系 | 好像是治愈风</p>
-        <div class="actions">
-            <a href="#portfolio" class="btn">看看作品嘛~</a>
-            <a href="https://space.bilibili.com/168115760" target="_blank" class="btn btn-bilibili">Bilibili 主页</a>
-            <a href="https://y.music.163.com/m/artist?id=98638633&userid=586710065" target="_blank" class="btn btn-netease">网易云主页</a>
-            <div class="download-wrapper">
-                <div class="neon-sign-box">
-                    <div class="flowing-disco-bg"></div>
-                    <div class="neon-text-content" data-text="真的不进来看看嘛呜呜">
-                        真的不点进来看看嘛呜呜
+    <main>
+        <div class="focus-overlay" aria-hidden="true"></div>
+
+        <section id="home" class="hero">
+            <div class="hero-status-pill">
+                <span class="status-dot"></span>
+                <span class="status-text-day">奶油电台频道 · 温暖治愈中</span>
+                <span class="status-text-night">NEON RADIO · 赛博夜航频段</span>
+            </div>
+
+            <div class="avatar-stage">
+                <div class="avatar-ring-outer" aria-hidden="true"></div>
+                <div class="avatar-ring-glow" aria-hidden="true"></div>
+                <img src="./Picture/头像.jpg" alt="我的头像" class="avatar" title="连点 5 次唤醒秘密星海音乐盒~">
+                <span class="avatar-hint" aria-hidden="true">✦ 连点 5 次唤醒星海彩蛋</span>
+            </div>
+
+            <h1 class="hero-title">
+                你好呜，我是 <span class="name-accent">爻舜</span> 哇！
+            </h1>
+
+            <p class="hero-subtitle">
+                <span class="sub-chip">✨ 一只怪唱见哇</span>
+                <span class="sub-sep" aria-hidden="true">/</span>
+                <span class="sub-chip">可能是温暖系</span>
+                <span class="sub-sep" aria-hidden="true">/</span>
+                <span class="sub-chip">好像是治愈风</span>
+            </p>
+
+            <div class="actions">
+                <div class="actions-buttons">
+                    <div class="download-wrapper">
+                        <div class="neon-sign-box" aria-hidden="true">
+                            <div class="flowing-disco-bg"></div>
+                            <div class="neon-text-content" data-text="真的不点进来看看嘛呜呜">
+                                真的不点进来看看嘛呜呜
+                            </div>
+                            <div class="neon-arrow-down"></div>
+                        </div>
+                        <a href="/download" class="btn btn-download target-btn vault-link">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>我的资源小仓库</span>
+                        </a>
                     </div>
-                    <div class="neon-arrow-down"></div>
+
+                    <a href="https://space.bilibili.com/168115760" target="_blank" rel="noopener noreferrer" class="btn btn-bilibili">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="6" width="18" height="13" rx="3.5"></rect>
+                            <path d="M8 3l2.5 3M16 3l-2.5 3M9.5 11.5v2M14.5 11.5v2"></path>
+                        </svg>
+                        <span>Bilibili 主页</span>
+                    </a>
+
+                    <a href="https://y.music.163.com/m/artist?id=98638633&userid=586710065" target="_blank" rel="noopener noreferrer" class="btn btn-netease">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                        </svg>
+                        <span>网易云主页</span>
+                    </a>
                 </div>
-                <a href="/download" class="btn btn-download target-btn">我的资源小仓库</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="portfolio" class="section">
-        <h2 class="section-title">比较新的几个投稿</h2>
-        <div class="portfolio-grid">
-            <p style="text-align:center; width:100%; color:#999;">正在加载精彩视频...</p>
-        </div>
-    </section>
-
-    <section id="about" class="section">
-        <h2 class="section-title">关于我的一大↗↘堆信息</h2>
-        <div class="about-container">
-            <p class="about-text">
-                呜哇！我是一只06年的INFP双鱼四川男娃呀，目前川北医大二在读。爱好很多：听歌、唱歌、画画、玩游戏、看番、看剧等。头像是ikutsuki老师画的兽太Sisi！！！我超级超级喜欢的~呜呜。
-            </p>
-            <p class="about-text">
-                特别喜欢的歌手有Chilichill和Aimer，但是各种风格的歌曲都会听的，比较喜欢的曲风有J-pop、R&B和City-pop。
-            </p>
-            <p class="about-text">
-                <hr><br>
-                🎙️ <b>硬件：<br></b>
-                电脑：MagicBook 16 Pro 2024，<s>Apple Macbook Pro 2015</s>（现在不用啦）<br>
-                麦克风：<u>Sennheiser MK4（主要录音麦克风）</u>，Audio-Technica AT2040<br>
-                声卡：Focusrite Clarett+ 2Pre，<s>Focusrite Scarlett Solo 3rd</s>（现在不用啦）<br>
-                监听设备：AKG K52 & Sony WH-1000XM5<s>（主打的就是业余说是）</s>，Yamaha HS4<br><br>
-                💻 <b>DAW：<br></b>
-                宿主：Cubase 13 pro，Studio one 7 Pro，<S>Logic Pro X</S>（换Windows之后就没用过啦）<br>
-                用的奇奇怪怪的插件：Waves、Fabfilter、Ozone 11、Soren、T-RackS、iZotope RX 11、Kontakt、Plugin Alliance、
-                Sonible、TBTECH、Valhalla、IK、Antares.......<br><br>
-                🎨 <b>技能：<br></b>
-                翻唱 / 简单混修音 / 给大家提供情绪价值嘿嘿<br><br>
-            </p>
-            <hr><br>
-            <p class="about-text">
-                翻唱多半是临时起意，录歌环境有限<s>（偶尔去后山录音）</s>（搬了新校区之后找不到地方录歌了呜呜，让我再找找有没有好地方awa），出作品比较慢，我尽量克服懒癌呀。
-                <br><br>正在做的自媒体项目：<br>1.乱七八糟的一堆翻唱<br>2.[电台节目]舜时听风<br>3.前面的区域以后再来探索吧....
-                <br><hr><br>想要联系与扩列直接可以加网站最下方的QQ，欢迎哇！
-            </p>
-            <p class="about-text" style="text-align: right; color: var(--accent-pink); margin-top: 20px;">
-                —— 期待与你在任何地方相遇哇！
-            </p>
-        </div>
-    </section>
-
-    <section id="gallery" class="infinite-gallery-section">
-        <h2 class="section-title">我的奇怪属性切片嘿嘿<br>（可以点哦）</h2>
-        
-        <div id="banner-container">
-            <div id="banner-mask">
-                <div class="img-wrapper" id="dynamic-gallery"></div>
+        <section id="warehouse" class="section reveal-block">
+            <div class="section-header">
+                <span class="section-kicker">DIMENSIONAL VAULT</span>
+                <h2 class="section-title">爻の仓库</h2>
             </div>
 
-            <div class="gallery-btn-group">
-                <button class="btn-round prev" aria-label="上一张">
-                    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg>
-                </button>
-                <button class="btn-round next" aria-label="下一张">
-                    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
-                </button>
-            </div>
-        </div>
-    </section>
+            <div class="warehouse-container">
+                <p class="warehouse-desc">这里存放着未经发布的数据碎片 · 悬停充能，点击跃迁</p>
 
-    <section id="warehouse" class="section">
-        <h2 class="section-title">爻の仓库</h2>
-        
-        <div class="warehouse-container">
-            <p class="warehouse-desc">这里存放着未经发布的数据碎片...</p>
-            
-            <a href="/download" class="portal-gate">
-                <div class="portal-vortex"></div>
-                
-                <div class="portal-core">
-                    <span class="main-text">OPEN</span>
-                    <span class="sub-text">进入异世界</span>
+                <div class="stargate-stage">
+                    <canvas id="portal-canvas" aria-hidden="true"></canvas>
+                    <a href="/download" class="portal-gate vault-link" id="portal-gate" aria-label="进入爻的仓库">
+                        <span class="gyro-ring gyro-ring-1" aria-hidden="true"></span>
+                        <span class="gyro-ring gyro-ring-2" aria-hidden="true"></span>
+                        <span class="gyro-ring gyro-ring-3" aria-hidden="true"></span>
+                        <div class="portal-vortex" aria-hidden="true"></div>
+                        <div class="portal-core">
+                            <span class="portal-kicker">WARP GATE</span>
+                            <span class="main-text">OPEN</span>
+                            <span class="sub-text">进入异世界</span>
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-    </section>
+            </div>
+        </section>
+
+        <section id="about" class="section reveal-block">
+            <div class="section-header">
+                <span class="section-kicker">PROFILE &amp; GEAR</span>
+                <h2 class="section-title">关于我的一大↗↘堆信息</h2>
+            </div>
+
+            <div class="about-container">
+                <div class="about-bento-intro spotlight-card">
+                    <div class="profile-pills">
+                        <span class="pill pill-pink">06年</span>
+                        <span class="pill pill-mint">INFP · 双鱼座</span>
+                        <span class="pill pill-butter">四川男娃</span>
+                        <span class="pill pill-lavender">川北医大二在读</span>
+                        <span class="pill pill-pink">设子 KōShun</span>
+                    </div>
+                    <p class="about-text">
+                        呜哇！我是一只06年的INFP双鱼四川男娃呀，目前川北医大二在读。爱好很多：听歌、唱歌、画画、玩游戏、看番、看剧等。头像是我的设子KōShun！！！超级超级可爱吧~嘻嘻。
+                    </p>
+                    <p class="about-text">
+                        特别喜欢的歌手有 <strong>Chilichill</strong> 和 <strong>Aimer</strong>，但是各种风格的歌曲都会听的，比较喜欢的曲风有 <strong>J-pop</strong>、<strong>R&amp;B</strong> 和 <strong>City-pop</strong>。
+                    </p>
+                </div>
+
+                <div class="about-bento-grid">
+                    <article class="bento-card bento-hardware spotlight-card">
+                        <h3 class="bento-card-title">
+                            <span class="bento-icon" aria-hidden="true">🎙️</span>
+                            <span>硬件装备</span>
+                        </h3>
+                        <ul class="gear-list">
+                            <li>
+                                <span class="gear-label">电脑</span>
+                                <span class="gear-value">MagicBook 16 Pro 2024，<s>Apple Macbook Pro 2015</s>（现在不用啦）</span>
+                            </li>
+                            <li>
+                                <span class="gear-label">麦克风</span>
+                                <span class="gear-value"><u>Sennheiser MK4（主要录音麦克风）</u>，Audio-Technica AT2040</span>
+                            </li>
+                            <li>
+                                <span class="gear-label">声卡</span>
+                                <span class="gear-value">Focusrite Clarett+ 2Pre，<s>Focusrite Scarlett Solo 3rd</s>（现在不用啦）</span>
+                            </li>
+                            <li>
+                                <span class="gear-label">监听</span>
+                                <span class="gear-value">AKG K52 &amp; Sony WH-1000XM5<s>（主打的就是业余说是）</s>，Yamaha HS4</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="bento-card bento-daw spotlight-card">
+                        <h3 class="bento-card-title">
+                            <span class="bento-icon" aria-hidden="true">💻</span>
+                            <span>DAW &amp; 插件库</span>
+                        </h3>
+                        <ul class="gear-list">
+                            <li>
+                                <span class="gear-label">宿主</span>
+                                <span class="gear-value">Cubase 13 pro，Studio one 7 Pro，<s>Logic Pro X</s>（换Windows之后就没用过啦）</span>
+                            </li>
+                            <li>
+                                <span class="gear-label">插件</span>
+                                <span class="gear-value">
+                                    <span class="plugin-cloud">
+                                        <span>Waves</span><span>Fabfilter</span><span>Ozone 11</span><span>Soren</span>
+                                        <span>T-RackS</span><span>iZotope RX 11</span><span>Kontakt</span>
+                                        <span>Plugin Alliance</span><span>Sonible</span><span>TBTECH</span>
+                                        <span>Valhalla</span><span>IK</span><span>Antares</span><span>……</span>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="bento-card bento-skills spotlight-card">
+                        <h3 class="bento-card-title">
+                            <span class="bento-icon" aria-hidden="true">🎨</span>
+                            <span>技能点</span>
+                        </h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">🎤 翻唱</span>
+                            <span class="skill-tag">🎛️ 简单混修音</span>
+                            <span class="skill-tag">💛 给大家提供情绪价值嘿嘿</span>
+                        </div>
+                    </article>
+
+                    <article class="bento-card bento-projects spotlight-card">
+                        <h3 class="bento-card-title">
+                            <span class="bento-icon" aria-hidden="true">📻</span>
+                            <span>正在做的自媒体项目</span>
+                        </h3>
+                        <ol class="project-list">
+                            <li>乱七八糟的一堆翻唱</li>
+                            <li>[电台节目] 舜时听风</li>
+                        </ol>
+                        <p class="project-signature">—— 前面的区域以后再来探索吧....</p>
+                    </article>
+                </div>
+
+                <div class="about-bento-footer spotlight-card">
+                    <p class="about-text">
+                        翻唱多半是临时起意，录歌环境有限<s>（偶尔去后山录音）</s>（搬了新校区之后找不到地方录歌了呜呜，让我再找找有没有好地方awa），出作品比较慢，我尽量克服懒癌呀。
+                    </p>
+                    <p class="about-text about-contact-note">
+                        想要联系与扩列直接可以加网站最下方的 QQ，欢迎哇！
+                    </p>
+                    <p class="about-signature">
+                        —— 期待与你在任何地方相遇哇！
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="section reveal-block">
+            <div class="section-header">
+                <span class="section-kicker">LATEST RELEASES</span>
+                <h2 class="section-title">比较新的几个投稿</h2>
+            </div>
+            <div class="portfolio-grid">
+                <p class="loading-placeholder">正在加载精彩视频...</p>
+            </div>
+        </section>
+
+        <section id="gallery" class="infinite-gallery-section reveal-block">
+            <div class="section-header">
+                <span class="section-kicker">ENDLESS GALLERY</span>
+                <h2 class="section-title">我的奇怪属性切片嘿嘿</h2>
+                <p class="section-hint">可以左右拖拽，也可以直接点击放大查看哦 ✦</p>
+            </div>
+
+            <div id="banner-container">
+                <div id="banner-mask">
+                    <div class="img-wrapper" id="dynamic-gallery"></div>
+                </div>
+
+                <div class="gallery-btn-group">
+                    <button class="btn-round prev" aria-label="上一张">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="btn-round next" aria-label="下一张">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p>Designed with <span class="heart">♥</span> for 爻舜</p>
-        <p>联系邮箱: 2720356281@qq.com</p>
-        <p><br>此网站本人已开源</p>
-        <p>github：<a href="https://github.com/Yao-Shun-Ya/personal-website" target="_blank">https://github.com/Yao-Shun-Ya/personal-website（可点击跳转）</a></p>
-        <p><br><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2025173793号</a></p>
+        <div class="footer-card">
+            <p class="footer-brand">Designed with <span class="heart">♥</span> for <strong>爻舜</strong></p>
+
+            <div class="footer-links">
+                <button type="button" class="footer-pill copy-email-btn" data-email="2720356281@qq.com" title="点击复制 QQ 邮箱">
+                    <span>📧 2720356281@qq.com</span>
+                    <span class="copy-badge">复制</span>
+                </button>
+                <a class="footer-pill" href="https://github.com/Yao-Shun-Ya/personal-website" target="_blank" rel="noopener noreferrer">
+                    <span>💻 GitHub 开源仓库</span>
+                </a>
+            </div>
+
+            <p class="footer-meta">
+                此网站本人已开源 · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2025173793号</a>
+            </p>
+        </div>
     </footer>
 
-    <div id="easter-egg-modal" class="easter-modal-backdrop">
-        <div class="easter-card">
-            <button class="easter-close-btn">&times;</button>
+    <div id="site-toast" class="site-toast" role="status" aria-live="polite"></div>
+
+    <!-- 惊艳全屏星海音乐盒彩蛋 -->
+    <div id="easter-egg-modal" class="easter-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="easter-title">
+        <canvas id="easter-canvas" aria-hidden="true"></canvas>
+        <div class="easter-card" id="easter-card">
+            <div class="easter-holo-foil" aria-hidden="true"></div>
+            <button class="easter-close-btn" aria-label="关闭弹窗">&times;</button>
             <div class="easter-content">
-                <div class="easter-icon">🎉</div>
-                <h2>哇！被你发现啦！</h2>
+                <span class="easter-badge">✦ SECRET STAGE · KŌSHUN ✦</span>
+                <div class="easter-gif-stage" aria-hidden="true">
+                    <img src="./Picture/gai.gif" alt="" class="easter-gif">
+                </div>
+                <h2 id="easter-title">哇！被你发现啦！</h2>
                 <p class="highlight-text">感谢生命中的每一个人</p>
                 <p class="sub-text">✨ 感谢欣赏过我作品的每个你 ✨</p>
+                <div class="easter-actions">
+                    <button type="button" class="easter-action-btn" id="easter-replay-btn">🎵 重播星光八音盒</button>
+                    <button type="button" class="easter-action-btn" id="easter-firework-btn">🎆 再放一波烟花</button>
+                </div>
+                <p class="easter-tip">小提示：点击夜空任意空白处都可以继续发射专属烟花哦~</p>
             </div>
         </div>
     </div>
-    
-    <div id="music-player" class="music-player">
-        <ul id="playlist-ul" class="playlist">
-            </ul>
+
+    <aside id="music-player" class="music-player" aria-label="悬浮黑胶唱机播放器">
+        <ul id="playlist-ul" class="playlist" aria-label="播放列表"></ul>
+
+        <!-- 折叠态精致悬浮胶囊 -->
+        <div class="player-mini-pill">
+            <span class="mini-disc" aria-hidden="true"></span>
+            <span id="mini-song-title" class="mini-title">选择一首歌吧~</span>
+            <button id="mini-play-btn" class="mini-btn mini-btn-play" aria-label="播放或暂停">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"></path></svg>
+            </button>
+            <button id="mini-expand-btn" class="mini-btn" aria-label="展开播放器" title="展开播放器">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            </button>
+        </div>
 
         <div class="player-handle">
-            <span class="player-title">🎵 舜の播放列表</span>
-            <button id="toggle-playlist" aria-label="显示/隐藏列表">≣</button>
+            <div class="player-title-wrap">
+                <span class="player-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="player-title">爻の黑胶唱机</span>
+            </div>
+            <div class="handle-actions">
+                <button id="toggle-playlist" class="handle-icon-btn" aria-label="显示或隐藏播放列表" title="播放列表">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <circle cx="3.5" cy="6" r="1" fill="currentColor"></circle>
+                        <circle cx="3.5" cy="12" r="1" fill="currentColor"></circle>
+                        <circle cx="3.5" cy="18" r="1" fill="currentColor"></circle>
+                    </svg>
+                </button>
+                <button id="collapse-player" class="handle-icon-btn" aria-label="收起为胶囊" title="收起为胶囊">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+            </div>
         </div>
 
         <div class="player-body">
-            <div class="cover-spin"></div>
+            <div class="turntable-wrap" aria-hidden="true">
+                <div class="cover-spin">
+                    <span class="vinyl-label"><span class="vinyl-core"></span></span>
+                </div>
+                <div class="tonearm">
+                    <span class="tonearm-pivot"></span>
+                    <span class="tonearm-arm"></span>
+                </div>
+            </div>
             <div class="song-info">
                 <h4 id="current-song-title">选择一首歌吧~</h4>
-                <div class="progress-container" id="progress-container">
+                <div id="player-spectrum" class="player-spectrum" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="progress-container" id="progress-container" role="slider" tabindex="0" aria-label="播放进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0:00 / 0:00">
                     <div class="progress-bar" id="progress-bar"></div>
                 </div>
                 <div class="time-display">
-                    <span id="curr-time">0:00</span> / <span id="dur-time">0:00</span>
+                    <span id="curr-time">0:00</span>
+                    <span id="dur-time">0:00</span>
                 </div>
             </div>
         </div>
 
         <div class="player-controls">
-            <button id="prev-btn">⏮</button>
-            <button id="play-btn">▶</button>
-            <button id="next-btn">⏭</button>
-            
-            <div class="volume-container" title="拖动调节音量">
+            <button id="mode-btn" class="ctrl-btn" aria-label="切换播放模式" title="当前：列表循环">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 1 21 5 17 9"></polyline>
+                    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                    <polyline points="7 23 3 19 7 15"></polyline>
+                    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                </svg>
+            </button>
+            <button id="prev-btn" class="ctrl-btn" aria-label="上一首">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"></path></svg>
+            </button>
+            <button id="play-btn" class="ctrl-btn ctrl-play" aria-label="播放或暂停">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"></path></svg>
+            </button>
+            <button id="next-btn" class="ctrl-btn" aria-label="下一首">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path></svg>
+            </button>
+
+            <div class="volume-container" title="上下拖动或滚轮调节音量">
+                <svg class="volume-arc-svg" viewBox="0 0 44 44" aria-hidden="true">
+                    <circle class="volume-arc-bg" cx="22" cy="22" r="18"></circle>
+                    <circle id="volume-arc-fill" class="volume-arc-fill" cx="22" cy="22" r="18"></circle>
+                </svg>
                 <div id="volume-knob" class="knob">
                     <div class="knob-indicator"></div>
                 </div>
             </div>
         </div>
-    </div>
+    </aside>
 
     <script src="songs.js"></script>
     <script src="player.js"></script>
-    
     <script src="script.js"></script>
-    <script src="gallery.js"></script> 
+    <script src="gallery.js"></script>
     <script src="easter-egg.js"></script>
 </body>
 </html>
